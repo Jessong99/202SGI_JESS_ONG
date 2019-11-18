@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "652241429763",
+    "firebase_url": "https://sgi-jess-ong.firebaseio.com",
+    "project_id": "sgi-jess-ong",
+    "storage_bucket": "sgi-jess-ong.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652241429763:android:3b0365031328890bd0f536",
+        "android_client_info": {
+          "package_name": "com.example.a202sgi_jess_ong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652241429763-ekinuat4folidhj8accku7q80lkv6gcc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbzHWpbh-eifYJtUi-9EVYwfiODqNCssM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652241429763-ekinuat4folidhj8accku7q80lkv6gcc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
