@@ -17,13 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ProgressDialog mProgressDialog;
 
+    private FirebaseAuth mFirebaseAuth;
+
     //TODO : Try 1
     //TODO : Change App Icon
 
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mProgressDialog = new ProgressDialog(this);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
 
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -156,8 +162,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //if the fields all filled up
         mProgressDialog.setMessage("Signing In...");
         mProgressDialog.show();
+
     }
     private void registerUser() {
+        String email = eTextEmail.getText().toString().trim();
+        String password = eTextPassword.getText().toString().trim();
+
+        //if the fields all filled up
+        mProgressDialog.setMessage("Registering user...");
+        mProgressDialog.show();
+
+        mFirebaseAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            //if registeration is complete
+                            //start profile activity
+                            Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MainActivity.this,"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 
