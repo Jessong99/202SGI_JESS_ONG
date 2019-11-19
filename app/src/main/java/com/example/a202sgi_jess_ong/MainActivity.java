@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mToolbar);
 
         //drawer menu settings
