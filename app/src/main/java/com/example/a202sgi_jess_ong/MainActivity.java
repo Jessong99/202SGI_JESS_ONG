@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar mToolbar;
     NavigationView mNavigationView;
 
+    //TODO : Try 1
+    //TODO : Change App Icon
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.home:
-                Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
+            case R.id.profile:
+                Toast.makeText(this,"Profile",Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                break;
+            case R.id.about_us:
+                Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).commit();
                 break;
         }
         return false;

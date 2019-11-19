@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/gradient_background_180"
     android:padding="10dp">
 
     <ImageView
@@ -14,7 +14,6 @@
         android:layout_height="77dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:contentDescription="TODO"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/j_note_icon" />
