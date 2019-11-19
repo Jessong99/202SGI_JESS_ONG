@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        //set ... as white color
+        mToolbar.setOverflowIcon(getDrawable(R.drawable.overflow_icon));
         setSupportActionBar(mToolbar);
 
         //drawer menu settings
         mDrawerLayout = findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open_drawer,R.string.close_drawer);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
 
