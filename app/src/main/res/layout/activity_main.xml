@@ -15,21 +15,12 @@
         ></include>
     
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:headerLayout="@layout/drawer_header">
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu"
+        android:layout_gravity="start">
     </com.google.android.material.navigation.NavigationView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="369dp"
-        android:layout_marginTop="701dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        android:clickable="true"
-        android:focusable="true" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
