@@ -39,7 +39,7 @@
         <TextView
             android:textAlignment="center"
             android:text="@string/not_yet_register"
-            android:id="@+id/textView_signIn"
+            android:id="@+id/textView_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></TextView>
     </androidx.appcompat.widget.LinearLayoutCompat>

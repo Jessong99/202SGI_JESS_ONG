@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import org.w3c.dom.Text;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btnSignIn = (Button) findViewById(R.id.btn_signIn);
         eTextEmail = (EditText) findViewById(R.id.editText_email);
         eTextPassword = (EditText) findViewById(R.id.editText_password);
+        textViewRegister = (TextView) findViewById(R.id.textView_register);
 
 
     }
@@ -104,5 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
