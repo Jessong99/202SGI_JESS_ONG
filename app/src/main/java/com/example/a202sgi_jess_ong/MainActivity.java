@@ -8,6 +8,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -39,7 +41,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
-    //menu option
+    //... menu option
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    //activity for ... menu
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sort:
+                Toast.makeText(this,"Sort Btn Clicked",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.setting:
+                Toast.makeText(this,"Setting Btn Clicked",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.contact:
+                Toast.makeText(this,"Contact Btn Clicked",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //nav menu activity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){

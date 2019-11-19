@@ -9,7 +9,10 @@
         android:visible="true"
         app:showAsAction="ifRoom" />
     <item
-        android:title="Item"
+        android:id="@+id/setting"
+        android:title="Setting"
         android:visible="true" />
-    <item android:title="Item" />
+    <item
+        android:id="@+id/contact"
+        android:title="Contact" />
 </menu>
