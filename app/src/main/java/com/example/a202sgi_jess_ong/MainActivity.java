@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private EditText eTextPassword;
     private TextView textViewRegister;
 
+    private ProgressDialog mProgressDialog;
+
     //TODO : Try 1
     //TODO : Change App Icon
 
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        mProgressDialog = new ProgressDialog(this);
+
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         //set ... as white color
@@ -139,12 +146,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
 
-        if(TextUtils.isEmpty(password){
+        if(TextUtils.isEmpty(password)){
             //password is empty
             Toast.makeText(this,"Please enter the password.",Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
         }
+
+        //if the fields all filled up
+        mProgressDialog.setMessage("Signing In...");
+        mProgressDialog.show();
     }
     private void registerUser() {
     }
