@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
+
     }
 
     //... menu option
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.profile:
-                Toast.makeText(this,"Profile",Toast.LENGTH_SHORT).show();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
                 break;
             case R.id.about_us:
@@ -88,6 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
+        return true;
     }
 }
