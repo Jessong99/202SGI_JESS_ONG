@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -22,6 +25,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle mDrawerToggle;
     Toolbar mToolbar;
     NavigationView mNavigationView;
+
+    private Button btnSignIn;
+    private EditText eTextEmail;
+    private EditText eTextPassword;
+    private TextView textViewRegister;
 
     //TODO : Try 1
     //TODO : Change App Icon
@@ -45,8 +53,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
 
+        //nav setting
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        //profile - sign in
+        btnSignIn = (Button) findViewById(R.id.btn_signIn);
+        eTextEmail = (EditText) findViewById(R.id.editText_email);
+        eTextPassword = (EditText) findViewById(R.id.editText_password);
+
 
     }
 
