@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eTextPassword = (EditText) findViewById(R.id.editText_password);
         textViewRegister = (TextView) findViewById(R.id.textView_register);
 
+        btnSignIn.setOnClickListener(this);
+        textViewRegister.setOnClickListener(this);
 
     }
 
@@ -110,8 +113,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
     @Override
     public void onClick(View view) {
+        //profile - sign in
+        if (view == btnSignIn){
+            signInUser();
+        }
+        //profile - register
+        if (view == textViewRegister){
+            registerUser();
+        }
 
     }
+
+    //profile
+    private void signInUser() {
+        String email = eTextEmail.getText().toString().trim();
+        String password = eTextPassword.getText().toString().trim();
+
+        if(TextUtils.isEmpty(email)){
+            //email is empty
+            Toast.makeText(this,"Please enter the email.",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
+
+        if(TextUtils.isEmpty(password){
+            //password is empty
+            Toast.makeText(this,"Please enter the password.",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
+    }
+    private void registerUser() {
+    }
+
+
 }
