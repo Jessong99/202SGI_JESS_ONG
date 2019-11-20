@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 public class ProfileFragment extends Fragment{
 
+        //TODO: Get the user data from MainActivity
         int user = 0;
         int m;
 
@@ -29,10 +30,16 @@ public class ProfileFragment extends Fragment{
                         case 0:
                                 m = R.layout.fragment_sign_in;
                                 break;
+                        case 1:
+                                m = R.layout.fragment_register;
+                                break;
                         case 2:
                                 m = R.layout.fragment_profile;
                                 break;
                 }
                 return inflater.inflate(m,container,false);
         }
+
+
+
 }

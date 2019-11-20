@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar mToolbar;
     NavigationView mNavigationView;
 
+    //register
+    private Button btnRegister;
+    private EditText eTextEmailR;
+    private EditText eTextPasswordR;
+    private TextView textViewSignIn;
+    //signIn
     private Button btnSignIn;
     private EditText eTextEmail;
     private EditText eTextPassword;
@@ -73,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //nav setting
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        //profile - register
+        btnRegister = (Button) findViewById(R.id.btn_register);
+        eTextEmailR = (EditText) findViewById(R.id.editText_emailR);
+        eTextPasswordR = (EditText) findViewById(R.id.editText_passwordR);
+        textViewSignIn = (TextView) findViewById(R.id.textView_signIn);
 
         //profile - sign in
         btnSignIn = (Button) findViewById(R.id.btn_signIn);
@@ -140,7 +152,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    //profile
+    //profile - Register
+    private void registerUser() {
+        String emailR = eTextEmailR.getText().toString().trim();
+        String passwordR = eTextPasswordR.getText().toString().trim();
+
+        //TODO: Compile this error check with the sign in part
+        if(TextUtils.isEmpty(emailR)){
+            //email is empty
+            Toast.makeText(this,"Please enter the email.",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
+
+        if(TextUtils.isEmpty(passwordR)){
+            //password is empty
+            Toast.makeText(this,"Please enter the password.",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+        }
+
+        //if the fields all filled up
+        mProgressDialog.setMessage("Registering user...");
+        mProgressDialog.show();
+
+        mFirebaseAuth.createUserWithEmailAndPassword(emailR,passwordR)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            //if registration is complete
+                            //TODO: start profile activity
+                            Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MainActivity.this,"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    //profile - Sign In
     private void signInUser() {
         String email = eTextEmail.getText().toString().trim();
         String password = eTextPassword.getText().toString().trim();
@@ -158,34 +209,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //stopping the function execution further
             return;
         }
-
         //if the fields all filled up
         mProgressDialog.setMessage("Signing In...");
         mProgressDialog.show();
 
-    }
-    private void registerUser() {
-        String email = eTextEmail.getText().toString().trim();
-        String password = eTextPassword.getText().toString().trim();
-
-        //if the fields all filled up
-        mProgressDialog.setMessage("Registering user...");
-        mProgressDialog.show();
-
-        mFirebaseAuth.createUserWithEmailAndPassword(email,password)
+        mFirebaseAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        mProgressDialog.dismiss();
                         if (task.isSuccessful()){
-                            //if registration is complete
-                            //start profile activity
-                            Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(MainActivity.this,"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
+                            //TODO: start profile activity
                         }
                     }
                 });
-    }
 
+    }
 
 }

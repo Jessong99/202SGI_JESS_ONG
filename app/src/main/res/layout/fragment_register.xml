@@ -28,7 +28,7 @@
             android:layout_margin="15dp"
             android:inputType="textEmailAddress"
             android:hint="Enter your email"
-            android:id="@+id/editText_email"
+            android:id="@+id/editText_emailR"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
@@ -36,16 +36,16 @@
             android:layout_margin="15dp"
             android:inputType="textPassword"
             android:hint="Enter your password"
-            android:id="@+id/editText_password"
+            android:id="@+id/editText_passwordR"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
         <Button
             android:layout_margin="15dp"
-            android:id="@+id/btn_signIn"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"></Button>
+            android:text="@string/register"></Button>
 
         <TextView
             android:textAlignment="center"
