@@ -6,43 +6,4 @@
     android:background="@drawable/gradient_background_270"
     tools:context=".ProfileFragment">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:layout_margin="15dp"
-            android:inputType="textEmailAddress"
-            android:hint="Enter your email"
-            android:id="@+id/editText_email"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-
-        <EditText
-            android:layout_margin="15dp"
-            android:inputType="textPassword"
-            android:hint="Enter your password"
-            android:id="@+id/editText_password"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-
-        <Button
-            android:layout_margin="15dp"
-            android:id="@+id/btn_signIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_in"></Button>
-
-        <TextView
-            android:textAlignment="center"
-            android:text="@string/not_yet_register"
-            android:id="@+id/textView_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></TextView>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 </RelativeLayout>

@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eTextPassword = (EditText) findViewById(R.id.editText_password);
         textViewRegister = (TextView) findViewById(R.id.textView_register);
 
-        btnSignIn.setOnClickListener(this);
-        textViewRegister.setOnClickListener(this);
+//        btnSignIn.setOnClickListener(this);
+//        textViewRegister.setOnClickListener(this);
 
     }
 
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            //if registeration is complete
+                            //if registration is complete
                             //start profile activity
                             Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
                         }else {

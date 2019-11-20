@@ -15,9 +15,21 @@ import android.view.ViewGroup;
 
 public class ProfileFragment extends Fragment{
 
+        int user = 0;
+        int m;
+
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-                return inflater.inflate(R.layout.fragment_profile,container,false);
+                switch (user)
+                {
+                        case 0:
+                                m = R.layout.fragment_sign_in;
+                                break;
+                        case 2:
+                                m = R.layout.fragment_profile;
+                                break;
+                }
+                return inflater.inflate(m,container,false);
         }
 }
