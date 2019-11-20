@@ -3,12 +3,12 @@
     <string name="navigation_header">Jess</string>
     <string name="open_drawer">open</string>
     <string name="close_drawer">close</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about_us">About Us</string>
     <string name="profile">Profile</string>
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
     <string name="not_yet_register">Not yet register? Sign Up Here</string>
+    <string name="registered">Already have acount? Sign In Here</string>
+    <string name="user_signIn">Sign In</string>
+    <string name="user_register">Register</string>
 </resources>
