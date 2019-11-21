@@ -20,13 +20,15 @@ public class ProfileFragment extends Fragment{
         //TODO: Add back btn
         //TODO: Display profile
 
+
+
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
                 View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
+                fragmentTransaction.replace(R.id.fragment_container, new RegisterFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 

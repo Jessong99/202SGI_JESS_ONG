@@ -33,12 +33,13 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button button = (Button) view.findViewById(R.id.btn_register);
+        eTextEmailR = (EditText) view.findViewById(R.id.editText_emailR);
+        eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
+        textViewSignIn = (TextView) view.findViewById(R.id.textView_signIn);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                eTextEmailR = (EditText) v.findViewById(R.id.editText_emailR);
-                eTextPasswordR = (EditText) v.findViewById(R.id.editText_passwordR);
-                textViewSignIn = (TextView) v.findViewById(R.id.textView_signIn);
 
                 String emailR = eTextEmailR.getText().toString().trim();
                 String passwordR = eTextPasswordR.getText().toString().trim();
@@ -93,7 +94,6 @@ public class RegisterFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
 
         return view;
     }
