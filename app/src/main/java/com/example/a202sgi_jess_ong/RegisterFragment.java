@@ -77,6 +77,7 @@ public class RegisterFragment extends Fragment {
                                     //TODO: start profile activity
                                     Toast.makeText(getActivity(),"Registered Successfully",Toast.LENGTH_SHORT).show();
                                 }else {
+                                    //TODO: set why is failed, specific for 6 pw and legal email
                                     Toast.makeText(getActivity(),"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
                                 }
                             }
