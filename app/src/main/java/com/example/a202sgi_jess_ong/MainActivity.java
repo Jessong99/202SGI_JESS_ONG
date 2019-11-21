@@ -27,29 +27,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     Toolbar mToolbar;
     NavigationView mNavigationView;
 
-    //register
-    private Button btnRegister;
-    private EditText eTextEmailR;
-    private EditText eTextPasswordR;
-    private TextView textViewSignIn;
-    //signIn
-    private Button btnSignIn;
-    private EditText eTextEmail;
-    private EditText eTextPassword;
-    private TextView textViewRegister;
-
-    private ProgressDialog mProgressDialog;
-
     private FirebaseAuth mFirebaseAuth;
 
-    //TODO : Try 1
     //TODO : Change App Icon
 
     @Override
@@ -58,9 +44,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mProgressDialog = new ProgressDialog(this);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
+        if (mFirebaseAuth.getCurrentUser() != null){
+            //TODO : set which fragment to use
+            //choose which activity to run
+            //inflater.inflate(R.layout.fragment_sign_in,container,false);
+            //inflater.inflate(R.layout.fragment_register,container,false);
+            //inflater.inflate(R.layout.fragment_profile,container,false);
+        }
 
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -79,21 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //nav setting
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
-
-        //profile - register
-        btnRegister = (Button) findViewById(R.id.btn_register);
-        eTextEmailR = (EditText) findViewById(R.id.editText_emailR);
-        eTextPasswordR = (EditText) findViewById(R.id.editText_passwordR);
-        textViewSignIn = (TextView) findViewById(R.id.textView_signIn);
-
-        //profile - sign in
-        btnSignIn = (Button) findViewById(R.id.btn_signIn);
-        eTextEmail = (EditText) findViewById(R.id.editText_email);
-        eTextPassword = (EditText) findViewById(R.id.editText_password);
-        textViewRegister = (TextView) findViewById(R.id.textView_register);
-
-//        btnSignIn.setOnClickListener(this);
-//        textViewRegister.setOnClickListener(this);
 
     }
 
@@ -136,94 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        //profile - sign in
-        if (view == btnSignIn){
-            signInUser();
-        }
-        //profile - register
-        if (view == textViewRegister){
-            registerUser();
-        }
-
-    }
-
-    //profile - Register
-    private void registerUser() {
-        String emailR = eTextEmailR.getText().toString().trim();
-        String passwordR = eTextPasswordR.getText().toString().trim();
-
-        //TODO: Compile this error check with the sign in part
-        if(TextUtils.isEmpty(emailR)){
-            //email is empty
-            Toast.makeText(this,"Please enter the email.",Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
-            return;
-        }
-
-        if(TextUtils.isEmpty(passwordR)){
-            //password is empty
-            Toast.makeText(this,"Please enter the password.",Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
-            return;
-        }
-
-        //if the fields all filled up
-        mProgressDialog.setMessage("Registering user...");
-        mProgressDialog.show();
-
-        mFirebaseAuth.createUserWithEmailAndPassword(emailR,passwordR)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            //if registration is complete
-                            //TODO: start profile activity
-                            Toast.makeText(MainActivity.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(MainActivity.this,"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    //profile - Sign In
-    private void signInUser() {
-        String email = eTextEmail.getText().toString().trim();
-        String password = eTextPassword.getText().toString().trim();
-
-        if(TextUtils.isEmpty(email)){
-            //email is empty
-            Toast.makeText(this,"Please enter the email.",Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
-            return;
-        }
-
-        if(TextUtils.isEmpty(password)){
-            //password is empty
-            Toast.makeText(this,"Please enter the password.",Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
-            return;
-        }
-        //if the fields all filled up
-        mProgressDialog.setMessage("Signing In...");
-        mProgressDialog.show();
-
-        mFirebaseAuth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        mProgressDialog.dismiss();
-                        if (task.isSuccessful()){
-                            //TODO: start profile activity
-                        }
-                    }
-                });
-
     }
 
 }

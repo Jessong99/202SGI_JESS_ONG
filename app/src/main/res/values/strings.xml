@@ -11,4 +11,5 @@
     <string name="registered">Already have acount? Sign In Here</string>
     <string name="user_signIn">Sign In</string>
     <string name="user_register">Register</string>
+    <string name="log_out">Log Out</string>
 </resources>
