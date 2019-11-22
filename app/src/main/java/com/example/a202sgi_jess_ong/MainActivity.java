@@ -46,11 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() != null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).commit();
             //TODO : set which fragment to use
             //choose which activity to run
-            //inflater.inflate(R.layout.fragment_sign_in,container,false);
-            //inflater.inflate(R.layout.fragment_register,container,false);
-            //inflater.inflate(R.layout.fragment_profile,container,false);
         }
 
         mToolbar = findViewById(R.id.toolbar);
@@ -103,8 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.profile:
-                //TODO : set which fragment to use
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new RegisterFragment()).commit();
                 break;
             case R.id.about_us:
                 Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();

@@ -75,6 +75,16 @@ public class SignInFragment extends Fragment {
                                 mProgressDialog.dismiss();
                                 if (task.isSuccessful()){
                                     //TODO: start profile activity
+                                    //pass data to profile
+
+                                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment());
+                                    fragmentTransaction.addToBackStack(null);
+                                    fragmentTransaction.commit();
+
+                                }else {
+                                    //TODO: set why is failed, wrong pw or no user
+                                    Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
