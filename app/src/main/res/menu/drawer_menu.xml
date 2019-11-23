@@ -3,10 +3,13 @@
 
     <group >
         <item
+            android:id="@+id/home"
+            android:title="@string/home" />
+        <item
             android:id="@+id/profile"
-            android:title="Profile"/>
+            android:title="@string/profile"/>
         <item
             android:id="@+id/about_us"
-            android:title="About Us" />
+            android:title="@string/about_us" />
     </group>
 </menu>

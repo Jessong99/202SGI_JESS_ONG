@@ -28,13 +28,6 @@
             android:id="@+id/btn_logOut"
             android:layout_gravity="center_horizontal"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Try Sign In"
-            android:id="@+id/btn_trySignIn"
-            android:layout_gravity="center_horizontal"/>
-
     </LinearLayout>
 
 </RelativeLayout>

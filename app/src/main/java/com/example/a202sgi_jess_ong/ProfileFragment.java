@@ -34,7 +34,6 @@ public class ProfileFragment extends Fragment{
 
         private TextView mTextView;
         private Button btnLogOut;
-        ProgressDialog mProgressDialog;
         FirebaseAuth mFirebaseAuth;
 
         @Nullable
@@ -69,14 +68,7 @@ public class ProfileFragment extends Fragment{
                 }
             });
 
-
-                //TODO: Check xia
-                /*FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new RegisterFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();*/
-
-                return view;
+            return view;
         }
 
 }
