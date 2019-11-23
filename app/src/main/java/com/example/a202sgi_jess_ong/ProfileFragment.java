@@ -47,12 +47,11 @@ public class ProfileFragment extends Fragment{
 
             //check if user currently log in
             mFirebaseAuth = FirebaseAuth.getInstance();
-            if (mFirebaseAuth.getCurrentUser() != null){
-                /*FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment());
-                                    fragmentTransaction.addToBackStack(null);
-                                    fragmentTransaction.commit();
-                                    */
+            if (mFirebaseAuth.getCurrentUser() == null){
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
 
             //get current user email and display on profile
