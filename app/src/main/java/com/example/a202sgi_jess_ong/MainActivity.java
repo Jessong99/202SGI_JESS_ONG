@@ -43,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //TODO : Change App Icon
 
-    private RecyclerView mRecyclerView;
-    private ArrayList<Note> mNotes;
-    private NotesAdapter mNotesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
