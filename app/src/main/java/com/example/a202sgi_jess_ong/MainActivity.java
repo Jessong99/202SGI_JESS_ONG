@@ -46,9 +46,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        if (mFirebaseAuth.getCurrentUser() != null){
-        }
+        if (mFirebaseAuth.getCurrentUser() != null) {
 
+            //TODO : set which fragment to use
+            //choose which activity to run
+            //inflater.inflate(R.layout.fragment_sign_in,container,false);
+            //inflater.inflate(R.layout.fragment_register,container,false);
+            //inflater.inflate(R.layout.fragment_profile,container,false);
+        }
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         //set ... as white color

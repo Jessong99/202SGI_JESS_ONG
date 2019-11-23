@@ -59,7 +59,6 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-
                 mProgressDialog = new ProgressDialog(getActivity());
                 mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -74,13 +73,14 @@ public class RegisterFragment extends Fragment {
                                 mProgressDialog.dismiss();
                                 if (task.isSuccessful()){
                                     //if registration is complete
-                                    //TODO: start sign in activity
+                                    //TODO: start profile activity
                                     Toast.makeText(getActivity(),"Registered Successfully",Toast.LENGTH_SHORT).show();
-
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
                                     fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.commit();
+
+
                                 }else {
                                     //TODO: set why is failed, specific for 6 pw and legal email
                                     Toast.makeText(getActivity(),"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();

@@ -87,6 +87,7 @@ public class SignInFragment extends Fragment {
                                 }else {
                                     //TODO: set why is failed, wrong pw or no user
                                     Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         });

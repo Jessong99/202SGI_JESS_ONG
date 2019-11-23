@@ -10,11 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
+
 public class ProfileFragment extends Fragment{
 
         //TODO: Add back btn
@@ -33,9 +34,8 @@ public class ProfileFragment extends Fragment{
 
         private TextView mTextView;
         private Button btnLogOut;
-
-        private FirebaseAuth mFirebaseAuth;
-        private ProgressDialog mProgressDialog;
+        ProgressDialog mProgressDialog;
+        FirebaseAuth mFirebaseAuth;
 
         @Nullable
         @Override
@@ -48,10 +48,11 @@ public class ProfileFragment extends Fragment{
             //check if user currently log in
             mFirebaseAuth = FirebaseAuth.getInstance();
             if (mFirebaseAuth.getCurrentUser() != null){
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                /*FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment());
+                                    fragmentTransaction.addToBackStack(null);
+                                    fragmentTransaction.commit();
+                                    */
             }
 
             //get current user email and display on profile
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment{
                 fragmentTransaction.replace(R.id.fragment_container, new RegisterFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();*/
+
                 return view;
         }
 
