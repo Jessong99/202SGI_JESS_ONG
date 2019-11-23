@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -46,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() != null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).commit();
-            //TODO : set which fragment to use
-            //choose which activity to run
         }
 
         mToolbar = findViewById(R.id.toolbar);
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new RegisterFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
                 break;
             case R.id.about_us:
                 Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();

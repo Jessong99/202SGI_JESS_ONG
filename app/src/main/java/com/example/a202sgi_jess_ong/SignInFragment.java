@@ -2,6 +2,7 @@ package com.example.a202sgi_jess_ong;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class SignInFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        final View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
         Button button = (Button) view.findViewById(R.id.btn_signIn);
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
@@ -77,6 +78,7 @@ public class SignInFragment extends Fragment {
                                     //TODO: start profile activity
                                     //pass data to profile
 
+                                    Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment());
                                     fragmentTransaction.addToBackStack(null);

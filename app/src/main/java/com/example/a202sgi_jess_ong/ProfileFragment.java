@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class ProfileFragment extends Fragment{
@@ -39,17 +40,34 @@ public class ProfileFragment extends Fragment{
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-                View view = inflater.inflate(R.layout.fragment_profile, container, false);
+            View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-                 mTextView = (TextView)view.findViewById(R.id.textViewUserEmail);
-                 btnLogOut = (Button)view.findViewById(R.id.btn_logOut);
+            mTextView = (TextView)view.findViewById(R.id.textViewUserEmail);
+            btnLogOut = (Button)view.findViewById(R.id.btn_logOut);
 
-                 btnLogOut.setOnClickListener(new View.OnClickListener() {
-                         @Override
-                         public void onClick(View view) {
+            //check if user currently log in
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            if (mFirebaseAuth.getCurrentUser() != null){
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
 
-                         }
-                 });
+            //get current user email and display on profile
+            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            mTextView.setText("Welcome " + user.getEmail());
+
+            btnLogOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mFirebaseAuth.signOut();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
 
 
                 //TODO: Check xia
