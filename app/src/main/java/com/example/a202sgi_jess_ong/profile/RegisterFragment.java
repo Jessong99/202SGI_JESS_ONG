@@ -82,7 +82,7 @@ public class RegisterFragment extends Fragment {
                                     fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.commit();
                                 }
-                                //TODO: 24-Nov-19 Delete or not
+                                //TODO: Delete or not
                                 /*}else {
                                     //TODO: set why is failed, specific for 6 pw and legal email
                                     Toast.makeText(getActivity(),"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();

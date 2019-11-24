@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.home:
-                // TODO: 24-Nov-19 Back to main activity
+                // TODO: set Back to main activity
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();

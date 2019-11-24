@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,7 +60,7 @@ public class EditNoteActivity extends AppCompatActivity {
             long date = new Date().getTime();
             Note note = new Note(text,date);
 
-            // TODO: 24-Nov-19 Check xia 
+            // TODO: Check xia (delete or not)
             /*FirebaseFirestore.getInstance()
                     .collection("notes")
                     .add(note)
@@ -82,6 +84,17 @@ public class EditNoteActivity extends AppCompatActivity {
                 Map noteMap = new HashMap();
                 noteMap.put("content",text);
                 noteMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+
+                        }else{
+                            Toast.makeText(EditNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
 
             }else{
                 Toast.makeText(this,"Please Sign In To Save Note",Toast.LENGTH_SHORT).show();
