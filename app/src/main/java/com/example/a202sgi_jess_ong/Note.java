@@ -1,8 +1,11 @@
 package com.example.a202sgi_jess_ong;
 
+import java.sql.Timestamp;
+
 public class Note {
     private String noteText;
     private long noteDate;
+    private Timestamp created;
 
     public Note(String noteText, long noteDate) {
         this.noteText = noteText;

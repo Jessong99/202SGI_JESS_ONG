@@ -1,5 +1,14 @@
 package com.example.a202sgi_jess_ong;
 
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,21 +18,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
 import com.example.a202sgi_jess_ong.profile.ProfileFragment;
+import com.example.a202sgi_jess_ong.profile.SignInFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -49,9 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
-        if (mFirebaseAuth.getCurrentUser() != null) {
-            //TODO : set which fragment to use
+        if (mFirebaseAuth.getCurrentUser() == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).commit();
+        }else {
+            mFirebaseAuth.getCurrentUser(),getIdToken()
         }
+
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         //set ... as white color
@@ -88,22 +92,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadNotes() {
         this.mNotes = new ArrayList<>();
-        for (int i = 0; i < 12; i++){
-            mNotes.add(new Note("this hi ajakhdhkasjbk", new Date().getTime()));
-        }
+
 
         mNotesAdapter = new NotesAdapter(this,mNotes);
         mRecyclerView.setAdapter(mNotesAdapter);
-        mNotesAdapter.notifyDataSetChanged();
+        //todo mNotesAdapter.notifyDataSetChanged();
     }
 
     private void onAddNewNote() {
-        if(mNotes != null){
-            mNotes.add(new Note("This is a new note", new Date().getTime()));
-        }
-        if (mNotesAdapter != null){
-            mNotesAdapter.notifyDataSetChanged();
-        }
+        startActivity(new Intent(this,EditNoteActivity.class));
     }
 
     //... menu option
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.home:
-                // TODO: 24-Nov-19 Back to main activity 
+                // TODO: 24-Nov-19 Back to main activity
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
