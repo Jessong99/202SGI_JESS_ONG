@@ -6,21 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".EditNoteActivity">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/input_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:ems="10"
+            android:layout_gravity="top"
+            android:background="#fff"
+            />
 
-    <EditText
-        android:id="@+id/input_note"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:inputType="textMultiLine"
-        android:gravity="top"
-        android:ems="10"
-        android:layout_gravity="top"
-        android:background="#fff"
-    />
-</androidx.appcompat.widget.LinearLayoutCompat>
-
+    </com.google.android.material.textfield.TextInputEditText>
 </RelativeLayout>

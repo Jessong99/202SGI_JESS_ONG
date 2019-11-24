@@ -35,6 +35,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
         if (note != null){
             holder.noteText.setText(note.getNoteText());
             holder.noteDate.setText(NoteUtils.dateFromLong(note.getNoteDate()));
+
         }
     }
 

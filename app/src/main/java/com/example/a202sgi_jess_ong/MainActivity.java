@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,EditNoteActivity.class));
+                onAddNewNote();
             }
         });
 
@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNotesAdapter = new NotesAdapter(this,mNotes);
         mRecyclerView.setAdapter(mNotesAdapter);
         //todo mNotesAdapter.notifyDataSetChanged();
+    }
+
+    private void onAddNewNote() {
+        startActivity(new Intent(this,EditNoteActivity.class));
     }
 
     //... menu option

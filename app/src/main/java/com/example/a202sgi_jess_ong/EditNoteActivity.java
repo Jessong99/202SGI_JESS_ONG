@@ -1,7 +1,6 @@
 package com.example.a202sgi_jess_ong;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -11,15 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -59,13 +54,14 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     private void onSaveNote() {
-        String text = inputNote.getText().toString();
+        final String text = inputNote.getText().toString();
         if (!text.isEmpty()){
+            String userId = mFirebaseAuth.getCurrentUser().getUid();
             long date = new Date().getTime();
             Note note = new Note(text,date);
 
             // TODO: Check xia (delete or not)
-            FirebaseFirestore.getInstance()
+            /*FirebaseFirestore.getInstance()
                     .collection("notes")
                     .add(note)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -80,32 +76,25 @@ public class EditNoteActivity extends AppCompatActivity {
                             Toast.makeText(EditNoteActivity.this,e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                         }
                     });
-
+*/
             if (mFirebaseAuth.getCurrentUser()!= null){
 
-                final DatabaseReference newNoteRef = mDatabaseReference.push();
+                DatabaseReference newNoteRef = mDatabaseReference.push();
 
-                final Map noteMap = new HashMap();
+                Map noteMap = new HashMap();
                 noteMap.put("content",text);
                 noteMap.put("timestamp", ServerValue.TIMESTAMP);
 
-                Thread mainThread = new Thread(new Runnable() {
+                newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void run() {
-                        newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
 
-                                    Toast.makeText(EditNoteActivity.this,"Note Added",Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(EditNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                        }else{
+                            Toast.makeText(EditNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                        }
                     }
-                });
-                mainThread.start();
+                })
 
             }else{
                 Toast.makeText(this,"Please Sign In To Save Note",Toast.LENGTH_SHORT).show();
