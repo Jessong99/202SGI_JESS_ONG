@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,20 +73,26 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 mProgressDialog.dismiss();
-                                if (task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     //if registration is complete
                                     //TODO: start profile activity
-                                    Toast.makeText(getActivity(),"Registered Successfully",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
                                     fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.commit();
-
-
-                                }else {
+                                }
+                                //TODO: 24-Nov-19 Delete or not
+                                /*}else {
                                     //TODO: set why is failed, specific for 6 pw and legal email
                                     Toast.makeText(getActivity(),"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
-                                }
+                                }*/
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                             }
                         });
 

@@ -1,26 +1,29 @@
 package com.example.a202sgi_jess_ong;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     private EditText inputNote;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    FirebaseUser user;
+    private static final String TAG = EditNoteActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,9 @@ public class EditNoteActivity extends AppCompatActivity {
 
         inputNote = (EditText)findViewById(R.id.input_note);
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseAuth = FirebaseAuth.getInstance();
-        user = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(mFirebaseAuth.getCurrentUser().getUid());
+
     }
 
     @Override
@@ -49,12 +52,40 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     private void onSaveNote() {
-        String text = inputNote.getText().toString();
+        final String text = inputNote.getText().toString();
         if (!text.isEmpty()){
+            String userId = mFirebaseAuth.getCurrentUser().getUid();
             long date = new Date().getTime();
             Note note = new Note(text,date);
-            mDatabaseReference.child(user.getUid()).setValue(note);
 
+            // TODO: 24-Nov-19 Check xia 
+            /*FirebaseFirestore.getInstance()
+                    .collection("notes")
+                    .add(note)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "onSuccess: Successfully added the note... ");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(EditNoteActivity.this,e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+*/
+            if (mFirebaseAuth.getCurrentUser()!= null){
+
+                DatabaseReference newNoteRef = mDatabaseReference.push();
+
+                Map noteMap = new HashMap();
+                noteMap.put("content",text);
+                noteMap.put("timestamp", ServerValue.TIMESTAMP);
+
+            }else{
+                Toast.makeText(this,"Please Sign In To Save Note",Toast.LENGTH_SHORT).show();
+            }
             finish();
         }
 
