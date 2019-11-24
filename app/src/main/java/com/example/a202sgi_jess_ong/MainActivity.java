@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -14,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,11 +28,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -43,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //TODO : Change App Icon
 
+    private RecyclerView mRecyclerView;
+    private ArrayList<Note> mNotes;
+    private NotesAdapter mNotesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() != null) {
-
             //TODO : set which fragment to use
-            //choose which activity to run
-            //inflater.inflate(R.layout.fragment_sign_in,container,false);
-            //inflater.inflate(R.layout.fragment_register,container,false);
-            //inflater.inflate(R.layout.fragment_profile,container,false);
         }
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -77,6 +81,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        //RecyclerView
+        mRecyclerView = findViewById(R.id.notes_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        loadNotes();
+        //FAB
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddNewNote();
+            }
+        });
+
+    }
+
+    private void loadNotes() {
+        this.mNotes = new ArrayList<>();
+        for (int i = 0; i < 12; i++){
+            mNotes.add(new Note("this hi ajakhdhkasjbk", new Date().getTime()));
+        }
+
+        mNotesAdapter = new NotesAdapter(this,mNotes);
+        mRecyclerView.setAdapter(mNotesAdapter);
+        mNotesAdapter.notifyDataSetChanged();
+    }
+
+    private void onAddNewNote() {
+        if(mNotes != null){
+            mNotes.add(new Note("This is a new note", new Date().getTime()));
+        }
+        if (mNotesAdapter != null){
+            mNotesAdapter.notifyDataSetChanged();
+        }
     }
 
     //... menu option
@@ -109,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new NoteFragment()).commit();
+                // TODO: 24-Nov-19 Back to main activity 
                 break;
             case R.id.profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
@@ -122,5 +160,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadNotes();
+    }
+
 
 }

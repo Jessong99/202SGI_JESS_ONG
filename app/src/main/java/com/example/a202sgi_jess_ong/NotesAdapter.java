@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> {
 
     private ArrayList<Note> notes;
-    private Context mContext;
+    private Context context;
 
     public NotesAdapter(Context context, ArrayList<Note> notes) {
-        this.mContext = context;
+        this.context = context;
         this.notes = notes;
     }
 
@@ -25,7 +25,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
     @NonNull
     @Override
     public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.note_recyclerview,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_list,parent,false);
         return new NoteHolder(v);
     }
 
@@ -52,7 +52,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
 
         TextView noteText, noteDate;
 
-        public NoteHolder(@NonNull View itemView) {
+        public NoteHolder(View itemView) {
             super(itemView);
             noteDate = itemView.findViewById(R.id.note_date);
             noteText = itemView.findViewById(R.id.note_text);
