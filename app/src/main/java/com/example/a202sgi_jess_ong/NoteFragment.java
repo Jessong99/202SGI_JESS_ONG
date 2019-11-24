@@ -54,6 +54,12 @@ public class NoteFragment extends Fragment {
     }
 
     private void onAddNewNote() {
+        if(mNotes != null){
+            mNotes.add(new Note("This is a note", new Date().getTime()));
+        }
+        if (mNotesAdapter != null){
+            mNotesAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
