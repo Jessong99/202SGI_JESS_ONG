@@ -38,7 +38,6 @@ public class NoteFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -48,9 +47,9 @@ public class NoteFragment extends Fragment {
             mNotes.add(new Note("this hi ajakhdhkasjbk", new Date().getTime()));
         }
 
-        mNotesAdapter = new NotesAdapter(mNotes);
+        mNotesAdapter = new NotesAdapter(getContext(),mNotes);
         mRecyclerView.setAdapter(mNotesAdapter);
-        mNotesAdapter.notifyDataSetChanged();
+        //mNotesAdapter.notifyDataSetChanged();
     }
 
     private void onAddNewNote() {
@@ -61,6 +60,7 @@ public class NoteFragment extends Fragment {
             mNotesAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     public void onResume() {
