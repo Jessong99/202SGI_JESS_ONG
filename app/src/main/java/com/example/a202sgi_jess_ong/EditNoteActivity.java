@@ -94,7 +94,7 @@ public class EditNoteActivity extends AppCompatActivity {
                             Toast.makeText(EditNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
-                })
+                });
 
             }else{
                 Toast.makeText(this,"Please Sign In To Save Note",Toast.LENGTH_SHORT).show();
