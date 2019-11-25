@@ -102,7 +102,7 @@ public class EditNoteActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please Sign In To Save Note", Toast.LENGTH_SHORT).show();
         }
-        // TODO: 26-Nov-19 : finish();
+        finish();
 
     }
 }
