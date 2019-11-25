@@ -78,9 +78,7 @@ public class RegisterFragment extends Fragment {
                                     //TODO: start profile activity
                                     Toast.makeText(getActivity(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
-                                    fragmentTransaction.addToBackStack(null);
-                                    fragmentTransaction.commit();
+                                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
                                 }
                                 //TODO: Delete or not
                                 /*}else {
@@ -103,9 +101,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
             }
         });
 

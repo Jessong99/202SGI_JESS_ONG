@@ -1,18 +1,16 @@
 package com.example.a202sgi_jess_ong.profile;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
-import android.widget.TextView;
 
 import com.example.a202sgi_jess_ong.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,9 +39,7 @@ public class ProfileFragment extends Fragment{
             mFirebaseAuth = FirebaseAuth.getInstance();
             if (mFirebaseAuth.getCurrentUser() == null){
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
             }
 
             //get current user email and display on profile
@@ -55,9 +51,7 @@ public class ProfileFragment extends Fragment{
                 public void onClick(View view) {
                     mFirebaseAuth.signOut();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment());
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
                 }
             });
 

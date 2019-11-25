@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
         }
 
         mToolbar = findViewById(R.id.toolbar);
