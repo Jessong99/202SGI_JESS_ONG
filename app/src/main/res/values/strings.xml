@@ -13,4 +13,6 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="about_us">About Us</string>
+    <string name="hint_note">Write you note ......</string>
+    <string name="save">SAVE</string>
 </resources>
