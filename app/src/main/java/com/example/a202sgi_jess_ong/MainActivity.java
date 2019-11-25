@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a202sgi_jess_ong.profile.ProfileFragment;
 import com.example.a202sgi_jess_ong.profile.SignInFragment;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -89,6 +91,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseRecyclerAdapter<Note, NotesAdapter.NoteHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Note, NotesAdapter.NoteHolder>() {
+            NotesAdapter.NoteHolder.
+
+            @Override
+            protected void onBindViewHolder(@NonNull NotesAdapter.NoteHolder noteHolder, int i, @NonNull Note note) {
+                Note
+            }
+
+            @NonNull
+            @Override
+            public NotesAdapter.NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return null;
+            }
+        }}
 
     private void loadNotes() {
         this.mNotes = new ArrayList<>();
