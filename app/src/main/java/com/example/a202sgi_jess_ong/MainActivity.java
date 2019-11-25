@@ -134,11 +134,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // TODO: set Back to main activity
                 break;
             case R.id.profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack(null).commit();
                 break;
             case R.id.about_us:
                 Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).addToBackStack(null).commit();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
