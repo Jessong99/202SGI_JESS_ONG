@@ -98,10 +98,11 @@ public class EditNoteActivity extends AppCompatActivity {
                     });
                 }
             });
+            mainThread.start();
         } else {
             Toast.makeText(this, "Please Sign In To Save Note", Toast.LENGTH_SHORT).show();
         }
-        finish();
+        // TODO: 26-Nov-19 : finish();
 
     }
 }
