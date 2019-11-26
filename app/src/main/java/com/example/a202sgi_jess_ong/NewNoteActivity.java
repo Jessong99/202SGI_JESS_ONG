@@ -38,7 +38,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        //set ... as white color
         mToolbar.setOverflowIcon(getDrawable(R.drawable.overflow_icon));
         setSupportActionBar(mToolbar);
 
