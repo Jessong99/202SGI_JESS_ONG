@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,10 +42,22 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     class NoteViewHolder extends RecyclerView.ViewHolder {
 
         TextView noteText, noteDate;
+        LinearLayout singleNote;
+
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             noteText = (TextView) itemView.findViewById(R.id.note_text);
             noteDate = (TextView) itemView.findViewById(R.id.note_date);
+            singleNote = (LinearLayout)itemView.findViewById(R.id.list_item);
+        }
+
+        public void onClick(int position){
+            singleNote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    
+                }
+            });
         }
     }
 }

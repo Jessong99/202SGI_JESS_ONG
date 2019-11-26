@@ -2,6 +2,7 @@ package com.example.a202sgi_jess_ong;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +22,12 @@ import com.google.firebase.database.ServerValue;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditNoteActivity extends AppCompatActivity {
+public class NewNoteActivity extends AppCompatActivity {
 
     private EditText inputNote;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    private static final String TAG = EditNoteActivity.class.getSimpleName();
+    private static final String TAG = NewNoteActivity.class.getSimpleName();
     private Button btnSave;
 
     @Override
@@ -55,30 +56,16 @@ public class EditNoteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
     private void onSaveNote(String text) {
 
-        // TODO: Check xia (delete or not)
-        /*FirebaseFirestore.getInstance()
-                    .collection("notes")
-                    .add(note)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "onSuccess: Successfully added the note... ");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditNoteActivity.this,e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    });
-*/
         if (mFirebaseAuth.getCurrentUser() != null) {
 
             final DatabaseReference newNoteRef = mDatabaseReference.push();
-
             final Map noteMap = new HashMap();
             noteMap.put("noteText", text);
             noteMap.put("noteDate", ServerValue.TIMESTAMP);
@@ -90,9 +77,9 @@ public class EditNoteActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(EditNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(EditNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -103,6 +90,5 @@ public class EditNoteActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Sign In To Save Note", Toast.LENGTH_SHORT).show();
         }
         finish();
-
     }
 }

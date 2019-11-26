@@ -86,13 +86,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView = findViewById(R.id.notes_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList = new ArrayList<Note>();
-
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mList = new ArrayList<Note>();
+                Note n;
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    Note n = dataSnapshot1.getValue(Note.class);
+                    n = dataSnapshot1.getValue(Note.class);
                     mList.add(n);
                 }
                 mNotesAdapter = new NoteAdapter(MainActivity.this,mList);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void onAddNewNote() {
-        startActivity(new Intent(this,EditNoteActivity.class));
+        startActivity(new Intent(this, NewNoteActivity.class));
     }
 
     //... menu option
