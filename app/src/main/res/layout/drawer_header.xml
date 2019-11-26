@@ -8,27 +8,26 @@
     android:background="@drawable/gradient_background_180"
     android:padding="10dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView2"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="69dp"
         android:layout_height="77dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:visibility="visible"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/j_note_icon" />
+        app:srcCompat="@drawable/icon_jnote" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
         android:text="@string/navigation_header"
         android:textColor="#FAFBFC"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
