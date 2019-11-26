@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -64,19 +63,12 @@ public class NewNoteActivity extends AppCompatActivity {
             case R.id.save_note:
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-
-                    btnSave = (Button) findViewById(R.id.btn_save);
-                    btnSave.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String text = inputNote.getText().toString().trim();
-                            if (!TextUtils.isEmpty(text)) {
-                                onSaveNote(text);
-                            } else {
-                                Snackbar.make(view, "It is a empty note", Snackbar.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    String text = inputNote.getText().toString().trim();
+                    if (!TextUtils.isEmpty(text)) {
+                        onSaveNote(text);
+                    } else {
+                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
+                    }
                 }else {
                     Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
                 }
