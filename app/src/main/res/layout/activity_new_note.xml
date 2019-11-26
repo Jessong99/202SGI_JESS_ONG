@@ -28,14 +28,6 @@
             android:gravity="top"
             android:hint="@string/hint_note"
             android:inputType="textMultiLine" />
-        <!--            todo: drawable new_button-->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:id="@+id/btn_save"
-            android:text="@string/save"/>
 
 
     </LinearLayout>

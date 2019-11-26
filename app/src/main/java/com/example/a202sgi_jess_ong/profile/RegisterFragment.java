@@ -75,16 +75,10 @@ public class RegisterFragment extends Fragment {
                                 mProgressDialog.dismiss();
                                 if (task.isSuccessful()) {
                                     //if registration is complete
-                                    //TODO: start profile activity
                                     Toast.makeText(getActivity(), "Registered Successfully", Toast.LENGTH_SHORT).show();
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
                                 }
-                                //TODO: Delete or not
-                                /*}else {
-                                    //TODO: set why is failed, specific for 6 pw and legal email
-                                    Toast.makeText(getActivity(),"Registered Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
-                                }*/
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

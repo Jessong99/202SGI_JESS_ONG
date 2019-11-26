@@ -76,9 +76,7 @@ public class SignInFragment extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 mProgressDialog.dismiss();
                                 if (task.isSuccessful()){
-                                    //TODO: start profile activity
-                                    //pass data to profile
-
+                                    //TODO: start profile activity or show note list
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     FragmentManager fm = getFragmentManager();
                                     fm.popBackStack();

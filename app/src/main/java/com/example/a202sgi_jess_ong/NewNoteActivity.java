@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,7 +27,6 @@ public class NewNoteActivity extends AppCompatActivity {
     private EditText inputNote;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    private Button btnSave;
 
     private Menu mMenu;
     Toolbar mToolbar;
