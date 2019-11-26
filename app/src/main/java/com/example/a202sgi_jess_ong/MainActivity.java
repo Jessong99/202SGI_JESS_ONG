@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mFirebaseAuth;
 
     //TODO : Change App Icon
+    // TODO: 26-Nov-19 Change icon to ios icon  
 
     private RecyclerView mRecyclerView;
     private ArrayList<Note> mList;
