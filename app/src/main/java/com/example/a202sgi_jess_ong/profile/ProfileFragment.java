@@ -37,24 +37,24 @@ public class ProfileFragment extends Fragment{
 
             //check if user currently log in
             mFirebaseAuth = FirebaseAuth.getInstance();
-            if (mFirebaseAuth.getCurrentUser() == null){
+            if (mFirebaseAuth.getCurrentUser() != null){
+                //get current user email and display on profile
+                FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                mTextView.setText("Welcome " + user.getEmail());
+
+                btnLogOut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mFirebaseAuth.signOut();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+                    }
+                });
+            }else
+            {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
             }
-
-            //get current user email and display on profile
-            FirebaseUser user = mFirebaseAuth.getCurrentUser();
-            mTextView.setText("Welcome " + user.getEmail());
-
-            btnLogOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mFirebaseAuth.signOut();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
-                }
-            });
-
             return view;
         }
 

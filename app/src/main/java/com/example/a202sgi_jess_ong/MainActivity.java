@@ -82,29 +82,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        //RecyclerView
-        mRecyclerView = findViewById(R.id.notes_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mList = new ArrayList<Note>();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mList = new ArrayList<Note>();
-                Note n;
-                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    n = dataSnapshot1.getValue(Note.class);
-                    mList.add(n);
-                }
-                mNotesAdapter = new NoteAdapter(MainActivity.this,mList);
-                mRecyclerView.setAdapter(mNotesAdapter);
-            }
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            //RecyclerView
+            mRecyclerView = findViewById(R.id.notes_list);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mList = new ArrayList<Note>();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this,"No Data",Toast.LENGTH_SHORT).show();
-            }
-        });
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+            mDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    mList = new ArrayList<Note>();
+                    Note n;
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        n = dataSnapshot1.getValue(Note.class);
+                        mList.add(n);
+                    }
+                    mNotesAdapter = new NoteAdapter(MainActivity.this, mList);
+                    mRecyclerView.setAdapter(mNotesAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(MainActivity.this, "No Data", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         //FAB
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);

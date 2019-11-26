@@ -34,7 +34,13 @@ public class NewNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_note);
+        setContentView(R.layout.activity_new_note);
+
+        /*mToolbar = findViewById(R.id.toolbar);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        //set ... as white color
+        mToolbar.setOverflowIcon(getDrawable(R.drawable.overflow_icon));
+        setSupportActionBar(mToolbar);*/
 
         inputNote = (EditText)findViewById(R.id.input_note);
 
