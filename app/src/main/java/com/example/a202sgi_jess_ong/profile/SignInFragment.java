@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.a202sgi_jess_ong.R;
@@ -28,6 +29,7 @@ public class SignInFragment extends Fragment {
     private EditText eTextEmail;
     private EditText eTextPassword;
     private TextView textViewRegister;
+    private TextView textView2;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
@@ -78,9 +80,10 @@ public class SignInFragment extends Fragment {
                                     //pass data to profile
 
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
-                                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
-
+                                    FragmentManager fm = getFragmentManager();
+                                    if(fm.getBackStackEntryCount()>0) {
+                                        fm.popBackStack();
+                                    }
                                 }else {
                                     //TODO: set why is failed, wrong pw or no user
                                     Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
@@ -92,6 +95,7 @@ public class SignInFragment extends Fragment {
             }
         });
 
+        // TODO: 26-Nov-19 Set animation transaction to show diff 
         textViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -156,7 +156,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()){
             case R.id.home:
-                // TODO: set Back to main activity
+                // this will back to main page with list of note
+                // TODO: 26-Nov-19 Some sign in and wont back stack to here
+                // after sign in wont come here
                 FragmentManager fm = getSupportFragmentManager();
                 if(fm.getBackStackEntryCount()>0) {
                     fm.popBackStack();

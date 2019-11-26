@@ -97,6 +97,7 @@ public class RegisterFragment extends Fragment {
              }
         });
 
+        // TODO: 26-Nov-19 Set animation transaction to show diff
         textViewSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
