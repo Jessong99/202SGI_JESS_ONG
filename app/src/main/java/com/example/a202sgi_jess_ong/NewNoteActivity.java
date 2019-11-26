@@ -27,8 +27,9 @@ public class NewNoteActivity extends AppCompatActivity {
     private EditText inputNote;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    private static final String TAG = NewNoteActivity.class.getSimpleName();
     private Button btnSave;
+
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,9 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.new_note_menu,menu);
+        mMenu = menu;
+        return true;
     }
 
     private void onSaveNote(String text) {
