@@ -80,8 +80,8 @@ public class EditNoteActivity extends AppCompatActivity {
             final DatabaseReference newNoteRef = mDatabaseReference.push();
 
             final Map noteMap = new HashMap();
-            noteMap.put("content", text);
-            noteMap.put("timestamp", ServerValue.TIMESTAMP);
+            noteMap.put("noteText", text);
+            noteMap.put("noteDate", ServerValue.TIMESTAMP);
 
             Thread mainThread = new Thread(new Runnable() {
                 @Override

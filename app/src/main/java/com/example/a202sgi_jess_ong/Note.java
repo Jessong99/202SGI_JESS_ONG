@@ -5,6 +5,9 @@ public class Note {
     // TODO: noteDate is not using
     private long noteDate;
 
+    public Note() {
+    }
+
     public Note(String noteText, long noteDate) {
         this.noteText = noteText;
         this.noteDate = noteDate;
@@ -18,9 +21,7 @@ public class Note {
                 '}';
     }
 
-    public String getNoteText() {
-        return noteText;
-    }
+    public String getNoteText() { return noteText; }
 
     public void setNoteText(String noteText) {
         this.noteText = noteText;

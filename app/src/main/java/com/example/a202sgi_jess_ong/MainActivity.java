@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a202sgi_jess_ong.profile.ProfileFragment;
 import com.example.a202sgi_jess_ong.profile.SignInFragment;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -42,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //TODO : Change App Icon
 
     private RecyclerView mRecyclerView;
-    private ArrayList<Note> mNotes;
-    private NotesAdapter mNotesAdapter;
+    private ArrayList<Note> mList;
+    private FirebaseRecyclerOptions<Note> mFirebaseRecyclerOptions;
+    private NoteAdapter mNotesAdapter;
+    private DatabaseReference mDatabaseReference;
 
 
     @Override
@@ -79,8 +85,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //RecyclerView
         mRecyclerView = findViewById(R.id.notes_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mList = new ArrayList<Note>();
 
-        loadNotes();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    Note n = dataSnapshot1.getValue(Note.class);
+                    mList.add(n);
+                }
+                mNotesAdapter = new NoteAdapter(MainActivity.this,mList);
+                mRecyclerView.setAdapter(mNotesAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this,"No Data",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //FAB
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -92,32 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseRecyclerAdapter<Note, NotesAdapter.NoteHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Note, NotesAdapter.NoteHolder>() {
-            NotesAdapter.NoteHolder.
-
-            @Override
-            protected void onBindViewHolder(@NonNull NotesAdapter.NoteHolder noteHolder, int i, @NonNull Note note) {
-                Note
-            }
-
-            @NonNull
-            @Override
-            public NotesAdapter.NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return null;
-            }
-        }}
-
-    private void loadNotes() {
-        this.mNotes = new ArrayList<>();
-
-
-        mNotesAdapter = new NotesAdapter(this,mNotes);
-        mRecyclerView.setAdapter(mNotesAdapter);
-        //todo mNotesAdapter.notifyDataSetChanged();
-    }
 
     private void onAddNewNote() {
         startActivity(new Intent(this,EditNoteActivity.class));
@@ -172,12 +170,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadNotes();
-    }
-
 
 }
