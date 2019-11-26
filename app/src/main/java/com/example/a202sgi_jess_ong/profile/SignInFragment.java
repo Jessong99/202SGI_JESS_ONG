@@ -81,9 +81,7 @@ public class SignInFragment extends Fragment {
 
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     FragmentManager fm = getFragmentManager();
-                                    if(fm.getBackStackEntryCount()>0) {
-                                        fm.popBackStack();
-                                    }
+                                    fm.popBackStack();
                                 }else {
                                     //TODO: set why is failed, wrong pw or no user
                                     Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();

@@ -3,6 +3,7 @@ package com.example.a202sgi_jess_ong;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,26 +49,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        if (mFirebaseAuth.getCurrentUser() != null) {
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-
-            btnSave = (Button) findViewById(R.id.btn_save);
-            btnSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String text = inputNote.getText().toString().trim();
-                    if (!TextUtils.isEmpty(text)) {
-                        onSaveNote(text);
-                    } else {
-                        Snackbar.make(view, "It is a empty note", Snackbar.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
-        }else {
-            Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @Override
@@ -75,6 +56,33 @@ public class NewNoteActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.new_note_menu,menu);
         mMenu = menu;
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_note:
+                if (mFirebaseAuth.getCurrentUser() != null) {
+                    mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+
+                    btnSave = (Button) findViewById(R.id.btn_save);
+                    btnSave.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String text = inputNote.getText().toString().trim();
+                            if (!TextUtils.isEmpty(text)) {
+                                onSaveNote(text);
+                            } else {
+                                Snackbar.make(view, "It is a empty note", Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }else {
+                    Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onSaveNote(String text) {
