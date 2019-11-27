@@ -40,6 +40,8 @@ public class NewNoteActivity extends AppCompatActivity {
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         mToolbar.setOverflowIcon(getDrawable(R.drawable.overflow_icon));
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputNote = (EditText)findViewById(R.id.input_note);
 
@@ -57,6 +59,9 @@ public class NewNoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.save_note:
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
