@@ -105,7 +105,6 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 if (noteID!= null){
                     saveNote();
-                    //todo Save or not
                 }
                 finish();
                 break;
