@@ -25,9 +25,9 @@ public class NoteUtils {
         }
 
         final long diff = now - time;
-        if (diff < MINUTE_MILLIS){
+        if (diff < SECOND_MILLIS){
             return "Just now";
-        }else if (diff < 2 * MINUTE_MILLIS){
+        }else if (diff < 2 * SECOND_MILLIS){
             return "A minute ago";
         }else if (diff < 50 * MINUTE_MILLIS){
             return (diff / MINUTE_MILLIS + " minutes ago");
