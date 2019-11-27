@@ -82,13 +82,8 @@ public class NewNoteActivity extends AppCompatActivity {
                 break;
             case R.id.save_note:
                 if (mFirebaseAuth.getCurrentUser() != null) {
-                    mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-                    String text = inputNote.getText().toString().trim();
-                    if (!TextUtils.isEmpty(text)) {
-                        onSaveNote(text);
-                    } else {
-                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
-                    }
+                    saveNote();
+                    finish();
                 }else {
                     Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
                 }
@@ -98,37 +93,36 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote(){
-
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+        String text = inputNote.getText().toString().trim();
+        if (!TextUtils.isEmpty(text)) {
+            onSaveNote(text);
+        } else {
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
+        }
     }
     private void onSaveNote(String text) {
+        final DatabaseReference newNoteRef = mDatabaseReference.push();
+        final Map noteMap = new HashMap();
+        noteMap.put("noteText", text);
+        noteMap.put("noteDate", ServerValue.TIMESTAMP);
 
-        if (mFirebaseAuth.getCurrentUser() != null) {
-
-            final DatabaseReference newNoteRef = mDatabaseReference.push();
-            final Map noteMap = new HashMap();
-            noteMap.put("noteText", text);
-            noteMap.put("noteDate", ServerValue.TIMESTAMP);
-
-            Thread mainThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+        Thread mainThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
-            });
-            mainThread.start();
-        } else {
-            Toast.makeText(this, "Please Sign In To Save Note", Toast.LENGTH_SHORT).show();
-        }
-        finish();
+                    }
+                });
+            }
+        });
+        mainThread.start();
     }
 
     private void deleteNote(){
