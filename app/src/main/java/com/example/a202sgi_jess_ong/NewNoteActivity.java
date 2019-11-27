@@ -39,7 +39,7 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
 
-/*        try {
+        try {
             noteID = getIntent().getStringExtra("noteId");
             Toast.makeText(this,noteID,Toast.LENGTH_SHORT).show();
             if (!noteID.equals("no")){
@@ -48,7 +48,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
 
         //set up toolbar
         mToolbar = findViewById(R.id.toolbar);
@@ -61,13 +61,16 @@ public class NewNoteActivity extends AppCompatActivity {
         inputNote = (EditText)findViewById(R.id.input_note);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.new_note_menu,menu);
-        getMenuInflater().inflate(R.menu.edit_note_menu,menu);
+        if (!noteID.equals("no")){
+            getMenuInflater().inflate(R.menu.edit_note_menu,menu);
+        }else {
+            getMenuInflater().inflate(R.menu.new_note_menu,menu);
+        }
         mMenu = menu;
         return true;
     }
@@ -79,7 +82,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.delete_note:
-                if (noteID != null){
+                if (!noteID.equals("no")){
                     deleteNote();
                 }
                 break;
@@ -95,7 +98,6 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote(){
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
         String text = inputNote.getText().toString().trim();
         if (!TextUtils.isEmpty(text)) {
             final DatabaseReference newNoteRef = mDatabaseReference.push();

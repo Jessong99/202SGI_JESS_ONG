@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +37,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             @Override
             public void onClick(View view) {
                 String id = notes.get(position).getNoteId();
-                Toast.makeText(mContext,id,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext,NewNoteActivity.class);
                 intent.putExtra("noteId",id);
                 mContext.startActivity(intent);
