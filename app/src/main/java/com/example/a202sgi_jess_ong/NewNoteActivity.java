@@ -63,7 +63,6 @@ public class NewNoteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputNote = (EditText)findViewById(R.id.input_note);
-        inputNote.setSelection(inputNote.getText().length());
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
@@ -71,6 +70,7 @@ public class NewNoteActivity extends AppCompatActivity {
         if (noteID!= null){
             showCurrentData();
         }
+        inputNote.setSelection(inputNote.getText().length());
     }
 
     private void showCurrentData() {
@@ -78,6 +78,7 @@ public class NewNoteActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
+                inputNote.setSelection(inputNote.getText().length());
             }
 
             @Override
