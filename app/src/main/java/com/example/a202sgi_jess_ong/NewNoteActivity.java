@@ -48,6 +48,7 @@ public class NewNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_note);
 
         try {
+            //get noteId from Intent
             noteID = getIntent().getStringExtra("noteId");
         }catch (Exception e){
             e.printStackTrace();
@@ -62,6 +63,7 @@ public class NewNoteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputNote = (EditText)findViewById(R.id.input_note);
+        setSelectionRight();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
@@ -119,6 +121,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
     private void saveNote(){
         if (mFirebaseAuth.getCurrentUser() != null) {
+            //get edit text
             String text = inputNote.getText().toString().trim();
             if (!TextUtils.isEmpty(text)) {
                 if (noteID != null) {
@@ -127,11 +130,14 @@ public class NewNoteActivity extends AppCompatActivity {
                     updateNoteMap.put("noteText", text);
                     updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
                     mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
+                    //hide Soft Input From Window
                     View view = this.getCurrentFocus();
                     if (view != null) {
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
+                    setSelectionRight();
+                    //notify user the note is updated
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
                 } else {
                     //create new note
@@ -139,7 +145,7 @@ public class NewNoteActivity extends AppCompatActivity {
                     final Map noteMap = new HashMap();
                     noteMap.put("noteText", text);
                     noteMap.put("noteDate", ServerValue.TIMESTAMP);
-
+                    //save data into Firebase
                     Thread mainThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -156,7 +162,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         }
                     });
                     mainThread.start();
-                    finish();
+                    finish(); //todo back to the note list
                 }
             } else {
                 Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
@@ -164,6 +170,11 @@ public class NewNoteActivity extends AppCompatActivity {
         }else {
             Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setSelectionRight() {
+        int pos = inputNote.getText().length();
+        inputNote.setSelection(pos);
     }
 
     private void deleteNote(){
