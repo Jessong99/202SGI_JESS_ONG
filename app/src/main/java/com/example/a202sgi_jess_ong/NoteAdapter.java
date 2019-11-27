@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,17 +27,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @NonNull
     @Override
     public NoteAdapter.NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NoteViewHolder(LayoutInflater.from(mContext).inflate(R.layout.note_list,parent,false));
+        return new NoteViewHolder(LayoutInflater.from(mContext).inflate(R.layout.note_item,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NoteViewHolder holder, final int position) {
         holder.noteText.setText(notes.get(position).getNoteText());
         holder.noteDate.setText(NoteUtils.dateFromLong(notes.get(position).getNoteDate()));
         holder.singleNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),NewNoteActivity.class);
+                String id = notes.get(position).getNoteId();
+                Toast.makeText(mContext,id,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext,NewNoteActivity.class);
+                intent.putExtra("noteId",id);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -59,4 +64,5 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         }
 
     }
+
 }

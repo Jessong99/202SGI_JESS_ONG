@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a202sgi_jess_ong.profile.ProfileFragment;
 import com.example.a202sgi_jess_ong.profile.SignInFragment;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,10 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private RecyclerView mRecyclerView;
     private ArrayList<Note> mList;
-    private FirebaseRecyclerOptions<Note> mFirebaseRecyclerOptions;
     private NoteAdapter mNotesAdapter;
     private DatabaseReference mDatabaseReference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,30 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //set up RecyclerView
         if (mFirebaseAuth.getCurrentUser() != null) {
-            mRecyclerView = findViewById(R.id.notes_list);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            mList = new ArrayList<Note>();
-
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-            mDatabaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    mList = new ArrayList<Note>();
-                    Note n;
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        n = dataSnapshot1.getValue(Note.class);
-                        mList.add(n);
-                    }
-
-                    mNotesAdapter = new NoteAdapter(MainActivity.this, mList);
-                    mRecyclerView.setAdapter(mNotesAdapter);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(MainActivity.this, "No Data", Toast.LENGTH_SHORT).show();
-                }
-            });
+            setUpRecyclerView();
         }
 
         //set up FAB
@@ -120,6 +94,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    }
+
+    private void setUpRecyclerView() {
+        mRecyclerView = findViewById(R.id.notes_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mList = new ArrayList<Note>();
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                mList = new ArrayList<Note>();
+                Note n;
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    String noteID = dataSnapshot1.getKey();
+                    n = dataSnapshot1.getValue(Note.class);
+                    n.setNoteId(noteID);
+                    mList.add(n);
+                }
+                mNotesAdapter = new NoteAdapter(MainActivity.this, mList);
+                mRecyclerView.setAdapter(mNotesAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, "No Data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

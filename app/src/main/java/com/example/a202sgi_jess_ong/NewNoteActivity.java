@@ -39,15 +39,16 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
 
-        try {
+/*        try {
             noteID = getIntent().getStringExtra("noteId");
+            Toast.makeText(this,noteID,Toast.LENGTH_SHORT).show();
             if (!noteID.equals("no")){
                 mMenu.getItem(0).setVisible(false);
             }
 
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
 
         //set up toolbar
         mToolbar = findViewById(R.id.toolbar);
@@ -66,10 +67,7 @@ public class NewNoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_note_menu,menu);
-        if(!noteID.equals("no"))
-        {
-            getMenuInflater().inflate(R.menu.edit_note_menu,menu);
-        }
+        getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         mMenu = menu;
         return true;
     }
@@ -81,14 +79,13 @@ public class NewNoteActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.delete_note:
-                if (!noteID.equals("no")){
+                if (noteID != null){
                     deleteNote();
                 }
                 break;
             case R.id.save_note:
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     saveNote();
-                    finish();
                 }else {
                     Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
                 }
@@ -122,6 +119,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
             });
             mainThread.start();
+            finish();
         } else {
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
         }
@@ -133,6 +131,7 @@ public class NewNoteActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+                    noteID="no";
                     finish();
                 }else {
                     Log.e("NewNoteActivity", task.getException().toString());
