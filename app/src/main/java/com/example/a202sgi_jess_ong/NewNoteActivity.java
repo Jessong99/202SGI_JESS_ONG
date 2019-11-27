@@ -43,7 +43,7 @@ public class NewNoteActivity extends AppCompatActivity {
             noteID = getIntent().getStringExtra("noteId");
             Toast.makeText(this,noteID,Toast.LENGTH_SHORT).show();
             if (!noteID.equals("no")){
-                mMenu.getItem(0).setVisible(false);
+                mMenu.getItem(1).setVisible(false);
             }
 
         }catch (Exception e){
@@ -66,7 +66,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!noteID.equals("no")){
+        if (noteID!="no"){
             getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         }else {
             getMenuInflater().inflate(R.menu.new_note_menu,menu);
