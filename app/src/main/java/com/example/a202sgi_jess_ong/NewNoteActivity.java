@@ -2,6 +2,7 @@ package com.example.a202sgi_jess_ong;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -31,10 +32,22 @@ public class NewNoteActivity extends AppCompatActivity {
     private Menu mMenu;
     Toolbar mToolbar;
 
+    private String noteID = "no";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
+
+        try {
+            noteID = getIntent().getStringExtra("noteId");
+            if (!noteID.equals("no")){
+                mMenu.getItem(0).setVisible(false);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -62,6 +75,11 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.id.delete_note:
+                if (!noteID.equals("no")){
+                    deleteNote();
+                }
+                break;
             case R.id.save_note:
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
@@ -79,6 +97,9 @@ public class NewNoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void saveNote(){
+
+    }
     private void onSaveNote(String text) {
 
         if (mFirebaseAuth.getCurrentUser() != null) {
@@ -108,5 +129,20 @@ public class NewNoteActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Sign In To Save Note", Toast.LENGTH_SHORT).show();
         }
         finish();
+    }
+
+    private void deleteNote(){
+        mDatabaseReference.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+                    Log.e("NewNoteActivity", task.getException().toString());
+                    Toast.makeText(NewNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
