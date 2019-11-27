@@ -35,6 +35,8 @@ public class NewNoteActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
 
     private Menu mMenu;
+    private MenuItem edit;
+    private MenuItem update;
     Toolbar mToolbar;
     AlertDialog.Builder builder;
     private String noteID;
@@ -46,7 +48,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
         try {
             noteID = getIntent().getStringExtra("noteId");
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -74,6 +75,8 @@ public class NewNoteActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
+                edit.setVisible(false);
+                update.setVisible(true);
             }
 
             @Override
@@ -88,7 +91,6 @@ public class NewNoteActivity extends AppCompatActivity {
         if (noteID!= null){
             getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         }else {
-
             getMenuInflater().inflate(R.menu.new_note_menu,menu);
         }
         mMenu = menu;
@@ -101,59 +103,65 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.id.edit_note:
+                inputNote.requestFocus();
+                break;
             case R.id.delete_note:
                 if (noteID!= null){
                     deleteNote();
                 }
                 break;
             case R.id.save_note:
-                if (mFirebaseAuth.getCurrentUser() != null) {
-                    saveNote();
-                }else {
-                    Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
-                }
+                saveNote();
+                break;
+            case R.id.update_note2:
+                saveNote();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void saveNote(){
-        if (noteID!= null){
-            //update current note
-            String text = inputNote.getText().toString().trim();
-            final Map updateNoteMap = new HashMap();
-            updateNoteMap.put("noteText", text);
-            updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
-            mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
-        }else {
-            //create new note
+        if (mFirebaseAuth.getCurrentUser() != null) {
             String text = inputNote.getText().toString().trim();
             if (!TextUtils.isEmpty(text)) {
-                final DatabaseReference newNoteRef = mDatabaseReference.push();
-                final Map noteMap = new HashMap();
-                noteMap.put("noteText", text);
-                noteMap.put("noteDate", ServerValue.TIMESTAMP);
+                if (noteID != null) {
+                    //update current note
+                    final Map updateNoteMap = new HashMap();
+                    updateNoteMap.put("noteText", text);
+                    updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
+                    mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    //create new note
+                    final DatabaseReference newNoteRef = mDatabaseReference.push();
+                    final Map noteMap = new HashMap();
+                    noteMap.put("noteText", text);
+                    noteMap.put("noteDate", ServerValue.TIMESTAMP);
 
-                Thread mainThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Thread mainThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
-                    }
-                });
-                mainThread.start();
-                finish();
+                            });
+                        }
+                    });
+                    mainThread.start();
+                    finish();
+                }
             } else {
-                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
             }
+        }else {
+            Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
         }
     }
 
