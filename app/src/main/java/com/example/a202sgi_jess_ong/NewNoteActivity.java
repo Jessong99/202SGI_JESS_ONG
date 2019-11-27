@@ -63,7 +63,7 @@ public class NewNoteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputNote = (EditText)findViewById(R.id.input_note);
-        setSelectionRight();
+        inputNote.setSelection(inputNote.getText().length());
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
@@ -136,7 +136,6 @@ public class NewNoteActivity extends AppCompatActivity {
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
-                    setSelectionRight();
                     //notify user the note is updated
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
                 } else {
@@ -170,11 +169,6 @@ public class NewNoteActivity extends AppCompatActivity {
         }else {
             Toast.makeText(NewNoteActivity.this,"Please sign in to save note.",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void setSelectionRight() {
-        int pos = inputNote.getText().length();
-        inputNote.setSelection(pos);
     }
 
     private void deleteNote(){
