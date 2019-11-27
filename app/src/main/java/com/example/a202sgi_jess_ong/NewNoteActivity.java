@@ -103,6 +103,10 @@ public class NewNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                if (noteID!= null){
+                    saveNote();
+                    //todo Save or not
+                }
                 finish();
                 break;
             case R.id.delete_note:
