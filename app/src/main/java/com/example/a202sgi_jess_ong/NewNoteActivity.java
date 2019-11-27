@@ -1,11 +1,14 @@
 package com.example.a202sgi_jess_ong;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,8 +38,6 @@ public class NewNoteActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
 
     private Menu mMenu;
-    private MenuItem edit;
-    private MenuItem update;
     Toolbar mToolbar;
     AlertDialog.Builder builder;
     private String noteID;
@@ -126,6 +127,11 @@ public class NewNoteActivity extends AppCompatActivity {
                     updateNoteMap.put("noteText", text);
                     updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
                     mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
+                    View view = this.getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
                 } else {
                     //create new note
