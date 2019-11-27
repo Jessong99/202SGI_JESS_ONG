@@ -65,12 +65,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
         }
 
+        //set up toolbar
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         mToolbar.setOverflowIcon(getDrawable(R.drawable.overflow_icon));
         setSupportActionBar(mToolbar);
 
-        //drawer menu settings
+        //set up drawer menu
         mDrawerLayout = findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open_drawer,R.string.close_drawer);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -78,12 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
 
-        //nav setting
+        //set up navigationView
         mNavigationView = findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        //set up RecyclerView
         if (mFirebaseAuth.getCurrentUser() != null) {
-            //RecyclerView
             mRecyclerView = findViewById(R.id.notes_list);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mList = new ArrayList<Note>();
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         n = dataSnapshot1.getValue(Note.class);
                         mList.add(n);
                     }
+
                     mNotesAdapter = new NoteAdapter(MainActivity.this, mList);
                     mRecyclerView.setAdapter(mNotesAdapter);
                 }
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
 
-        //FAB
+        //set up FAB
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.a202sgi_jess_ong;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         holder.noteText.setText(notes.get(position).getNoteText());
         holder.noteDate.setText(NoteUtils.dateFromLong(notes.get(position).getNoteDate()));
+        holder.singleNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),NewNoteActivity.class);
+            }
+        });
     }
 
     @Override
@@ -44,20 +51,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         TextView noteText, noteDate;
         LinearLayout singleNote;
 
-        public NoteViewHolder(@NonNull View itemView) {
+        public NoteViewHolder(@NonNull final View itemView) {
             super(itemView);
             noteText = (TextView) itemView.findViewById(R.id.note_text);
             noteDate = (TextView) itemView.findViewById(R.id.note_date);
             singleNote = (LinearLayout)itemView.findViewById(R.id.list_item);
         }
 
-        public void onClick(int position){
-            singleNote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    
-                }
-            });
-        }
     }
 }

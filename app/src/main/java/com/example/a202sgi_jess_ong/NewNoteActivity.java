@@ -49,6 +49,7 @@ public class NewNoteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        //set up toolbar
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         mToolbar.setOverflowIcon(getDrawable(R.drawable.overflow_icon));
@@ -65,6 +66,10 @@ public class NewNoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_note_menu,menu);
+        if(!noteID.equals("no"))
+        {
+            getMenuInflater().inflate(R.menu.edit_note_menu,menu);
+        }
         mMenu = menu;
         return true;
     }
@@ -96,33 +101,30 @@ public class NewNoteActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
         String text = inputNote.getText().toString().trim();
         if (!TextUtils.isEmpty(text)) {
-            onSaveNote(text);
+            final DatabaseReference newNoteRef = mDatabaseReference.push();
+            final Map noteMap = new HashMap();
+            noteMap.put("noteText", text);
+            noteMap.put("noteDate", ServerValue.TIMESTAMP);
+
+            Thread mainThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            });
+            mainThread.start();
         } else {
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
         }
-    }
-    private void onSaveNote(String text) {
-        final DatabaseReference newNoteRef = mDatabaseReference.push();
-        final Map noteMap = new HashMap();
-        noteMap.put("noteText", text);
-        noteMap.put("noteDate", ServerValue.TIMESTAMP);
-
-        Thread mainThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-        mainThread.start();
     }
 
     private void deleteNote(){
