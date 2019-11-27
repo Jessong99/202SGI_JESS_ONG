@@ -2,14 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <item
-        android:id="@+id/edit_note"
-        android:icon="@drawable/ic_edit_while_24dp"
-        android:visible="true"
-        app:showAsAction="always"
-        android:title="Edit" />
-
     <item
         android:id="@+id/delete_note"
         android:icon="@drawable/ic_delete_white_24dp"
@@ -18,8 +10,8 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/update_note2"
+        android:id="@+id/update_note"
         android:title="Done"
-        android:visible="false" />
+        android:visible="true" />
 
 </menu>

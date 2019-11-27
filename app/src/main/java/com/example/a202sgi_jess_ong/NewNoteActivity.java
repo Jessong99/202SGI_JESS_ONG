@@ -75,8 +75,6 @@ public class NewNoteActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
-                edit.setVisible(false);
-                update.setVisible(true);
             }
 
             @Override
@@ -103,9 +101,6 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.edit_note:
-                inputNote.requestFocus();
-                break;
             case R.id.delete_note:
                 if (noteID!= null){
                     deleteNote();
@@ -114,7 +109,7 @@ public class NewNoteActivity extends AppCompatActivity {
             case R.id.save_note:
                 saveNote();
                 break;
-            case R.id.update_note2:
+            case R.id.update_note:
                 saveNote();
                 break;
         }
