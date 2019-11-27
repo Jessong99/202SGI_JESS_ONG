@@ -1,5 +1,6 @@
 package com.example.a202sgi_jess_ong;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -31,8 +33,8 @@ public class NewNoteActivity extends AppCompatActivity {
 
     private Menu mMenu;
     Toolbar mToolbar;
-
-    private String noteID = "no";
+    AlertDialog.Builder builder;
+    private String noteID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +44,6 @@ public class NewNoteActivity extends AppCompatActivity {
         try {
             noteID = getIntent().getStringExtra("noteId");
             Toast.makeText(this,noteID,Toast.LENGTH_SHORT).show();
-            if (!noteID.equals("no")){
-                mMenu.getItem(1).setVisible(false);
-            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -66,9 +65,10 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (noteID!="no"){
+        if (noteID!= null){
             getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         }else {
+
             getMenuInflater().inflate(R.menu.new_note_menu,menu);
         }
         mMenu = menu;
@@ -82,7 +82,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.delete_note:
-                if (!noteID.equals("no")){
+                if (noteID!= null){
                     deleteNote();
                 }
                 break;
@@ -128,18 +128,33 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void deleteNote(){
-        mDatabaseReference.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
-                    noteID="no";
-                    finish();
-                }else {
-                    Log.e("NewNoteActivity", task.getException().toString());
-                    Toast.makeText(NewNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.alert_delete_title);
+        builder.setMessage(R.string.alert_delete_text)
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mDatabaseReference.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }else {
+                                    Log.e("NewNoteActivity", task.getException().toString());
+                                    Toast.makeText(NewNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User select cancel and close the dialog box
+                    }
+                });
+        builder.create();
+        builder.show();
+
+
     }
 }
