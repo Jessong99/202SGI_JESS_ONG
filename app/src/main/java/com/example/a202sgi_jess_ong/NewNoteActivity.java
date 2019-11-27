@@ -18,9 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +46,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
         try {
             noteID = getIntent().getStringExtra("noteId");
-            Toast.makeText(this,noteID,Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -61,6 +63,24 @@ public class NewNoteActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+
+        if (noteID!= null){
+            showCurrentData();
+        }
+    }
+
+    private void showCurrentData() {
+        mDatabaseReference.child(noteID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -98,36 +118,47 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote(){
-        String text = inputNote.getText().toString().trim();
-        if (!TextUtils.isEmpty(text)) {
-            final DatabaseReference newNoteRef = mDatabaseReference.push();
-            final Map noteMap = new HashMap();
-            noteMap.put("noteText", text);
-            noteMap.put("noteDate", ServerValue.TIMESTAMP);
+        if (noteID!= null){
+            //update current note
+            String text = inputNote.getText().toString().trim();
+            final Map updateNoteMap = new HashMap();
+            updateNoteMap.put("noteText", text);
+            updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
+            mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
+        }else {
+            //create new note
+            String text = inputNote.getText().toString().trim();
+            if (!TextUtils.isEmpty(text)) {
+                final DatabaseReference newNoteRef = mDatabaseReference.push();
+                final Map noteMap = new HashMap();
+                noteMap.put("noteText", text);
+                noteMap.put("noteDate", ServerValue.TIMESTAMP);
 
-            Thread mainThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Thread mainThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        newNoteRef.setValue(noteMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
-                }
-            });
-            mainThread.start();
-            finish();
-        } else {
-            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
+                        });
+                    }
+                });
+                mainThread.start();
+                finish();
+            } else {
+                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),"It is a empty note", Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void deleteNote(){
+        //alert box before delete action
         builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.alert_delete_title);
         builder.setMessage(R.string.alert_delete_text)
@@ -154,7 +185,5 @@ public class NewNoteActivity extends AppCompatActivity {
                 });
         builder.create();
         builder.show();
-
-
     }
 }
