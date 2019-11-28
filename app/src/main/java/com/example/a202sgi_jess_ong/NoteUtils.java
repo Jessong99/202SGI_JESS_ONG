@@ -7,12 +7,6 @@ import java.util.Locale;
 
 public class NoteUtils {
 
-// TODO: 28-Nov-19 delete or not 
-    /*public static String dateFromLong(long time){
-        DateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy 'at' hh:mm aaa", Locale.US);
-        return format.format(new Date(time));
-    }*/
-
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60*SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60*MINUTE_MILLIS;
