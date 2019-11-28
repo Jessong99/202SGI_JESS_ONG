@@ -1,5 +1,10 @@
 package com.example.a202sgi_jess_ong;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class NoteUtils {
 
 // TODO: 28-Nov-19 delete or not 
@@ -19,26 +24,25 @@ public class NoteUtils {
             time *= 1000;
         }
         long now = System.currentTimeMillis();
+        DateFormat week = new SimpleDateFormat("EEE", Locale.US);
+        DateFormat date = new SimpleDateFormat("dd/MMMMM/yyyy", Locale.US);
+        DateFormat today = new SimpleDateFormat("hh:mm aaa", Locale.US);
 
         if (time > now || time <= 0){
             return null;
         }
 
         final long diff = now - time;
-        if (diff < SECOND_MILLIS){
+        if (diff < MINUTE_MILLIS){
             return "Just now";
-        }else if (diff < 2 * SECOND_MILLIS){
-            return "A minute ago";
-        }else if (diff < 50 * MINUTE_MILLIS){
-            return (diff / MINUTE_MILLIS + " minutes ago");
-        }else if (diff < 90 * MINUTE_MILLIS){
-            return "A hour ago";
-        }else if (diff < 24 * HOUR_MILLIS){
-            return (diff / HOUR_MILLIS + " hours ago");
-        }else if (diff < 48 * HOUR_MILLIS){
+        }else if (diff < 2 * MINUTE_MILLIS){
+            return today.format(new Date(time));
+        }else if (diff < 2 * DAY_MILLIS){
             return "Yesterday";
+        }else if (diff < 7 * DAY_MILLIS){
+            return week.format(new Date(time));
         }else{
-            return diff / DAY_MILLIS + " days ago";
+            return date.format(new Date(time));
         }
 
     }
