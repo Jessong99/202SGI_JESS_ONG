@@ -41,6 +41,7 @@ public class NewNoteActivity extends AppCompatActivity {
     Toolbar mToolbar;
     AlertDialog.Builder builder;
     private String noteID=null;
+    int i = 0; // TODO: 30-Nov-19 pass value to saveNote(if i =1; update hash map with noti) 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +94,12 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.reminder_menu,menu);
         if (noteID!= null){
             getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         }else {
             getMenuInflater().inflate(R.menu.new_note_menu,menu);
         }
-        getMenuInflater().inflate(R.menu.reminder_menu,menu);
         mMenu = menu;
         return true;
     }
@@ -121,6 +122,9 @@ public class NewNoteActivity extends AppCompatActivity {
                 saveNote();
                 break;
             case R.id.update_note:
+                saveNote();
+                break;
+            case R.id.reminder:
                 saveNote();
                 break;
         }
