@@ -77,8 +77,11 @@ public class NewNoteActivity extends AppCompatActivity {
         mDatabaseReference.child(noteID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
-                inputNote.setSelection(inputNote.getText().length());
+                if (dataSnapshot.child("noteText").getValue()!=null) {
+                    inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
+                    inputNote.setSelection(inputNote.getText().length());
+                }
+
             }
 
             @Override
