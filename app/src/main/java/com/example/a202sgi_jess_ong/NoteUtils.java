@@ -11,15 +11,8 @@ public class NoteUtils {
     private static final int MINUTE_MILLIS = 60*SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60*MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24*HOUR_MILLIS;
-    private static final int WEEK_MILLIS = 7*DAY_MILLIS;
 
-    private static DateFormat day = new SimpleDateFormat("dd", Locale.US);
-    private static DateFormat month = new SimpleDateFormat("MMM", Locale.US);
-    private static DateFormat year = new SimpleDateFormat("dd", Locale.US);
-
-    private static DateFormat week = new SimpleDateFormat("EEEE", Locale.US);
-    private static DateFormat date = new SimpleDateFormat("dd/MMM/yyyy", Locale.US);
-    private static DateFormat today = new SimpleDateFormat("hh:mm aaa", Locale.US);
+    private static DateFormat date = new SimpleDateFormat("hh:mm aaa, dd/MMM/yyyy", Locale.US);
 
     public static String dateFromLong(long time){
         if (time<100000000000L){
@@ -27,22 +20,19 @@ public class NoteUtils {
         }
         long now = System.currentTimeMillis();
 
-        int currentD = Integer.valueOf(day.format(new Date(now)));
-        int noteD = Integer.valueOf(day.format(new Date(time)));
-        String currentM = month.format(new Date(now));
-        String noteM = month.format(new Date(time));
-        int currentY = Integer.valueOf(year.format(new Date(now)));
-        int noteY = Integer.valueOf(year.format(new Date(time)));
-
         final long diff = now - time;
 
         if (diff < MINUTE_MILLIS){
             return "Just now";
-        }else if (diff >= MINUTE_MILLIS && currentD == noteD && currentM == noteM && currentY == noteY){
-            return today.format(new Date(time));
-        }else if (diff >= DAY_MILLIS && diff < WEEK_MILLIS){
-            return week.format(new Date(time));
-        }else{
+        } else if (diff >= MINUTE_MILLIS && diff < DAY_MILLIS) {
+            if (diff < HOUR_MILLIS) {
+                return diff / MINUTE_MILLIS + " minutes ago";
+            } else if (diff < 2 * HOUR_MILLIS) {
+                return "one hour ago";
+            } else {
+                return diff / HOUR_MILLIS + " hours ago";
+            }
+        } else {
             return date.format(new Date(time));
         }
 
