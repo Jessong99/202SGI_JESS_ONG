@@ -40,7 +40,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private Menu mMenu;
     Toolbar mToolbar;
     AlertDialog.Builder builder;
-    private String noteID;
+    private String noteID=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
