@@ -147,12 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.sort:
                 Toast.makeText(this,"Sort Btn Clicked",Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.setting:
-                Toast.makeText(this,"Setting Btn Clicked",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.contact:
-                Toast.makeText(this,"Contact Btn Clicked",Toast.LENGTH_SHORT).show();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }

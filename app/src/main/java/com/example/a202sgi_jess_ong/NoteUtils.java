@@ -7,34 +7,32 @@ import java.util.Locale;
 
 public class NoteUtils {
 
-    private static final int SECOND_MILLIS = 1000;
-    private static final int MINUTE_MILLIS = 60*SECOND_MILLIS;
-    private static final int HOUR_MILLIS = 60*MINUTE_MILLIS;
-    private static final int DAY_MILLIS = 24*HOUR_MILLIS;
+    private static DateFormat date = new SimpleDateFormat("dd/MMM/yyyy", Locale.US);
+    private static DateFormat today = new SimpleDateFormat("hh:mm aaa", Locale.US);
 
+    private static DateFormat timescale = new SimpleDateFormat("HHmm", Locale.US);
+    private static DateFormat day = new SimpleDateFormat("dd", Locale.US);
+    private static DateFormat month = new SimpleDateFormat("MMM", Locale.US);
+    private static DateFormat year = new SimpleDateFormat("dd", Locale.US);
 
     public static String dateFromLong(long time){
-        if (time<100000000000L){
-            time *= 1000;
-        }
         long now = System.currentTimeMillis();
-        DateFormat week = new SimpleDateFormat("EEE", Locale.US);
-        DateFormat date = new SimpleDateFormat("dd/MMMMM/yyyy", Locale.US);
-        DateFormat today = new SimpleDateFormat("hh:mm aaa", Locale.US);
 
-        if (time > now || time <= 0){
-            return null;
-        }
+        int currentT = Integer.valueOf(timescale.format(new Date(now)));
+        int noteT = Integer.valueOf(timescale.format(new Date(time)));
+        int currentD = Integer.valueOf(day.format(new Date(now)));
+        int noteD = Integer.valueOf(day.format(new Date(time)));
+        String currentM = month.format(new Date(now));
+        String noteM = month.format(new Date(time));
+        int currentY = Integer.valueOf(year.format(new Date(now)));
+        int noteY = Integer.valueOf(year.format(new Date(time)));
 
-        final long diff = now - time;
-        if (diff < MINUTE_MILLIS){
+        if (currentD == noteD && currentM == noteM && currentY == noteY && ((currentT-noteT)<2)){
             return "Just now";
-        }else if (diff < 2 * MINUTE_MILLIS){
+        }else if (currentD == noteD && currentM == noteM && currentY == noteY){
             return today.format(new Date(time));
-        }else if (diff < 2 * DAY_MILLIS){
+        }else if (currentM == noteM && currentY == noteY && ((currentD-noteD)<2)){
             return "Yesterday";
-        }else if (diff < 7 * DAY_MILLIS){
-            return week.format(new Date(time));
         }else{
             return date.format(new Date(time));
         }
