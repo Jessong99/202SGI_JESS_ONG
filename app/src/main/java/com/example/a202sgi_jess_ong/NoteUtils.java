@@ -28,7 +28,7 @@ public class NoteUtils {
             if (diff < HOUR_MILLIS) {
                 return diff / MINUTE_MILLIS + " minutes ago";
             } else if (diff < 2 * HOUR_MILLIS) {
-                return "one hour ago";
+                return "One hour ago";
             } else {
                 return diff / HOUR_MILLIS + " hours ago";
             }

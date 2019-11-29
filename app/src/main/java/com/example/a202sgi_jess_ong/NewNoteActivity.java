@@ -98,6 +98,7 @@ public class NewNoteActivity extends AppCompatActivity {
         }else {
             getMenuInflater().inflate(R.menu.new_note_menu,menu);
         }
+        getMenuInflater().inflate(R.menu.reminder_menu,menu);
         mMenu = menu;
         return true;
     }
