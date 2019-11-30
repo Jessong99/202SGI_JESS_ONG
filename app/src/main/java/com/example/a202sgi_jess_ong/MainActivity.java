@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue", Snackbar.LENGTH_SHORT).show();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
-            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue.", Snackbar.LENGTH_SHORT).show();
         }
 
         //set up toolbar
@@ -100,7 +100,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 BounceBtnInterpolation btnInterpolation = new BounceBtnInterpolation(0.2, 20);
                 animation.setInterpolator(btnInterpolation);
                 fab.startAnimation(animation);
-                onAddNewNote();
+                if (mFirebaseAuth.getCurrentUser() != null) {
+                    onAddNewNote();
+                }else {
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -186,9 +190,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // this will back to main page with list of note
                 // TODO: 26-Nov-19 Some sign in and wont back stack to here
                 // after sign in wont come here
-                FragmentManager fm = getSupportFragmentManager();
-                if(fm.getBackStackEntryCount()>0) {
-                    fm.popBackStack();
+                if (mFirebaseAuth.getCurrentUser() != null) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    if (fm.getBackStackEntryCount() > 0) {
+                        fm.popBackStack();
+                    }
                 }
                 break;
             case R.id.profile:
