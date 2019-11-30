@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mFirebaseAuth;
 
     //TODO : Change App Icon
-    // TODO: 26-Nov-19 Change icon to ios icon
 
     private RecyclerView mRecyclerView;
     private ArrayList<Note> mList;
@@ -96,18 +95,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation animation = AnimationUtils.loadAnimation(MainActivity.this,R.anim.bounce_btn);
+                //set up fab animation
+                Animation animation = AnimationUtils.loadAnimation(getBaseContext(),R.anim.bounce_btn);
                 BounceBtnInterpolation btnInterpolation = new BounceBtnInterpolation(0.2, 20);
                 animation.setInterpolator(btnInterpolation);
                 fab.startAnimation(animation);
                 if (mFirebaseAuth.getCurrentUser() != null) {
+                    //create new note
                     onAddNewNote();
                 }else {
+                    //request user to sign in
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 
     private void setUpRecyclerView() {
@@ -117,17 +118,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         linearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        //todo check
+        //set up animation for recyclerView to display
         Context context = mRecyclerView.getContext();
         LayoutAnimationController controller = null;
         controller = AnimationUtils.loadLayoutAnimation(context,R.anim.layout_fall_right);
 
         mList = new ArrayList<Note>();
-
+        //retrieve data from firebase
         mDatabaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Notes")
                 .child(mFirebaseAuth.getCurrentUser().getUid());
         final LayoutAnimationController finalController = controller;
+
+        //sort order by timestamp
         mDatabaseReference.orderByChild("noteDate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -135,8 +138,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mList = new ArrayList<Note>();
                 Note n;
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    //get note id
                     String noteID = dataSnapshot1.getKey();
+                    //get both note text and note date
                     n = dataSnapshot1.getValue(Note.class);
+                    //save into array list
                     n.setNoteId(noteID);
                     mList.add(n);
                 }
@@ -152,13 +158,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this, "No Data", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
-
-
     private void onAddNewNote() {
+        //intent to new note activity
         startActivity(new Intent(this, NewNoteActivity.class));
     }
 
@@ -170,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //activity for ... menu
+    // TODO: 30-Nov-19 maybe delete if not sort option
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -184,21 +187,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //nav menu activity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
         switch (menuItem.getItemId()){
             case R.id.home:
                 // this will back to main page with list of note
-                // TODO: 26-Nov-19 Some sign in and wont back stack to here
-                // after sign in wont come here
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     FragmentManager fm = getSupportFragmentManager();
                     if (fm.getBackStackEntryCount() > 0) {
                         fm.popBackStack();
                     }
+                }else {
+                    //lead user to sign in if currently not signed in
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
                 }
                 break;
             case R.id.profile:
-                // TODO: 26-Nov-19 Check all backstack Fragment
+                // TODO: 30-Nov-19 try cancel back stack
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack(null).commit();
                 break;
             case R.id.about_us:
