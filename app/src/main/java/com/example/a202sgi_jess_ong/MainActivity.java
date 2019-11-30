@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDatabaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Notes")
                 .child(mFirebaseAuth.getCurrentUser().getUid());
-        mDatabaseReference.orderByChild("noteDate").limitToLast(1000).addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.orderByChild("noteDate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
