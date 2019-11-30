@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,6 +35,8 @@ public class SignInFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
 
+    private LottieAnimationView animationView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
@@ -41,6 +44,7 @@ public class SignInFragment extends Fragment {
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
         textViewRegister = (TextView) view.findViewById(R.id.textView_register);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
