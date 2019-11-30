@@ -1,5 +1,6 @@
 package com.example.a202sgi_jess_ong;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -103,14 +104,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(this,R.anim.layout_fall_down);
-        mRecyclerView.setLayoutAnimation(layoutAnimationController);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        //todo check
+        Context context = mRecyclerView.getContext();
+        LayoutAnimationController controller = null;
+        controller = AnimationUtils.loadLayoutAnimation(context,R.anim.layout_fall_down);
+
         mList = new ArrayList<Note>();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Notes")
                 .child(mFirebaseAuth.getCurrentUser().getUid());
+        final LayoutAnimationController finalController = controller;
         mDatabaseReference.orderByChild("noteDate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 mNotesAdapter = new NoteAdapter(MainActivity.this, mList);
                 mRecyclerView.setAdapter(mNotesAdapter);
+                mRecyclerView.setLayoutAnimation(finalController);
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+                mRecyclerView.scheduleLayoutAnimation();
             }
 
             @Override
@@ -135,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
 
 
     private void onAddNewNote() {

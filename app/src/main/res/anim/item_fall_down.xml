@@ -2,6 +2,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="500">
 
+<!--    todo : delete ma-->
     <translate
         android:fromYDelta="-20%"
         android:toYDelta="0"
