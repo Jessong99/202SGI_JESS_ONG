@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //todo check
         Context context = mRecyclerView.getContext();
         LayoutAnimationController controller = null;
-        controller = AnimationUtils.loadLayoutAnimation(context,R.anim.layout_fall_down);
+        controller = AnimationUtils.loadLayoutAnimation(context,R.anim.layout_fall_right);
 
         mList = new ArrayList<Note>();
 

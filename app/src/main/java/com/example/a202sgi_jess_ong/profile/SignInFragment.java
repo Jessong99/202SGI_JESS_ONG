@@ -3,6 +3,7 @@ package com.example.a202sgi_jess_ong.profile;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -55,15 +57,23 @@ public class SignInFragment extends Fragment {
 
                 if(TextUtils.isEmpty(email)){
                     //email is empty
-                    Toast.makeText(getActivity(),"Please enter the email.",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();
                     //stopping the function execution further
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
                     //password is empty
-                    Toast.makeText(getActivity(),"Please enter the password.",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please enter the password.", Snackbar.LENGTH_SHORT).show();
                     //stopping the function execution further
+                    return;
+                }
+
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    //email is invalid format
+                    Snackbar.make(view, "Please enter a valid email address.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
