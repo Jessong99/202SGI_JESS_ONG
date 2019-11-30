@@ -98,11 +98,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setUpRecyclerView() {
         mRecyclerView = findViewById(R.id.notes_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mList = new ArrayList<Note>();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference()
+                .child("Notes")
+                .child(mFirebaseAuth.getCurrentUser().getUid());
+        mDatabaseReference.orderByChild("noteDate").limitToLast(1000).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
