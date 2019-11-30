@@ -27,6 +27,7 @@ import com.example.a202sgi_jess_ong.profile.ProfileFragment;
 import com.example.a202sgi_jess_ong.profile.SignInFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue.", Snackbar.LENGTH_SHORT).show();
         }
 
         //set up toolbar
