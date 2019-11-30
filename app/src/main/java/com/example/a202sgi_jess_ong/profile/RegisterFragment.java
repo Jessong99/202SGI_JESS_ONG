@@ -1,11 +1,14 @@
 package com.example.a202sgi_jess_ong.profile;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -31,6 +35,7 @@ public class RegisterFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
 
+    private InputMethodManager imm;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
@@ -38,26 +43,35 @@ public class RegisterFragment extends Fragment {
         eTextEmailR = (EditText) view.findViewById(R.id.editText_emailR);
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
         textViewSignIn = (TextView) view.findViewById(R.id.textView_signIn);
+        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
 
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String emailR = eTextEmailR.getText().toString().trim();
                 String passwordR = eTextPasswordR.getText().toString().trim();
 
                 //TODO: Compile this error check with the sign in part
                 if(TextUtils.isEmpty(emailR)){
                     //email is empty
-                    Toast.makeText(getActivity(),"Please enter the email.",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();
                     //stopping the function execution further
                     return;
                 }
 
                 if(TextUtils.isEmpty(passwordR)){
                     //password is empty
-                    Toast.makeText(getActivity(),"Please enter the password.",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please enter the password.", Snackbar.LENGTH_SHORT).show();
                     //stopping the function execution further
+                    return;
+                }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(emailR).matches())
+                {
+                    //email is invalid format
+                    Snackbar.make(view, "Please enter a valid email address.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 

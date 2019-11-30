@@ -73,7 +73,6 @@ public class SignInFragment extends Fragment {
                     return;
                 }
 
-
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
                 {
                     //email is invalid format
