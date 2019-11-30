@@ -20,42 +20,41 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment{
 
-        //TODO: Add back btn
-        //TODO: Display profile
+    //TODO: Add back btn
+    //TODO: Display profile
 
-        private TextView mTextView;
-        private Button btnLogOut;
-        FirebaseAuth mFirebaseAuth;
+    private TextView mTextView;
+    private Button btnLogOut;
+    FirebaseAuth mFirebaseAuth;
 
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-            mTextView = (TextView)view.findViewById(R.id.textViewUserEmail);
-            btnLogOut = (Button)view.findViewById(R.id.btn_logOut);
+        mTextView = (TextView) view.findViewById(R.id.textViewUserEmail);
+        btnLogOut = (Button) view.findViewById(R.id.btn_logOut);
 
-            //check if user currently log in
-            mFirebaseAuth = FirebaseAuth.getInstance();
-            if (mFirebaseAuth.getCurrentUser() != null){
-                //get current user email and display on profile
-                FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                mTextView.setText("Welcome " + user.getEmail());
+        //check if user currently log in
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        if (mFirebaseAuth.getCurrentUser() != null) {
+            //get current user email and display on profile
+            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            mTextView.setText("Welcome " + user.getEmail());
 
-                btnLogOut.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mFirebaseAuth.signOut();
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
-                    }
-                });
-            }else
-            {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
-            }
-            return view;
+            btnLogOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mFirebaseAuth.signOut();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+                }
+            });
+        } else {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
         }
+        return view;
+    }
 
 }
