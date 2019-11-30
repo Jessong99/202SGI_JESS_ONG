@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
@@ -89,10 +90,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //set up FAB
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation animation = AnimationUtils.loadAnimation(MainActivity.this,R.anim.bounce_btn);
+                BounceBtnInterpolation btnInterpolation = new BounceBtnInterpolation(0.2, 20);
+                animation.setInterpolator(btnInterpolation);
+                fab.startAnimation(animation);
                 onAddNewNote();
             }
         });
