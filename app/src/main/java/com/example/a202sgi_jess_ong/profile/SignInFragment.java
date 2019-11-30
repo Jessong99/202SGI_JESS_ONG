@@ -1,12 +1,14 @@
 package com.example.a202sgi_jess_ong.profile;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ public class SignInFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth;
 
     private LottieAnimationView animationView;
+    private InputMethodManager imm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,12 +49,13 @@ public class SignInFragment extends Fragment {
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
         textViewRegister = (TextView) view.findViewById(R.id.textView_register);
-
+        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
 
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String email = eTextEmail.getText().toString().trim();
                 String password = eTextPassword.getText().toString().trim();
 
