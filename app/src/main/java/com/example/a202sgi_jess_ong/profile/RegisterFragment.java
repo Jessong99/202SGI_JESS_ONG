@@ -57,14 +57,12 @@ public class RegisterFragment extends Fragment {
                 if(TextUtils.isEmpty(emailR)){
                     //email is empty
                     Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();
-                    //stopping the function execution further
                     return;
                 }
 
                 if(TextUtils.isEmpty(passwordR)){
                     //password is empty
                     Snackbar.make(view, "Please enter the password.", Snackbar.LENGTH_SHORT).show();
-                    //stopping the function execution further
                     return;
                 }
 
