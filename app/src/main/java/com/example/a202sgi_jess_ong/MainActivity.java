@@ -195,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     finish();
                     startActivity(getIntent());
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else {
                     //lead user to sign in if currently not signed in
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
@@ -215,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        //leave app if press back button 2 times within a certain time frame
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
             super.onBackPressed();
@@ -223,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
             backToast.show();
         }
-
         backPressedTime = System.currentTimeMillis();
     }
 
