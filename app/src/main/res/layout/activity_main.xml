@@ -28,14 +28,7 @@
 
             <include layout="@layout/note_recyclerview"></include>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:backgroundTint="#FF80AB"
-                android:src="@drawable/ic_add_white_24dp" />
+
 
 
         </FrameLayout>
