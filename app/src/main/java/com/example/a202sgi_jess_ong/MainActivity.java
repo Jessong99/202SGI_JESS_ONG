@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -191,10 +190,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.home:
                 // this will back to main page with list of note
                 if (mFirebaseAuth.getCurrentUser() != null) {
-                    FragmentManager fm = getSupportFragmentManager();
-                    if (fm.getBackStackEntryCount() > 0) {
-                        fm.popBackStack();
-                    }
+                    finish();
+                    startActivity(getIntent());
                 }else {
                     //lead user to sign in if currently not signed in
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
