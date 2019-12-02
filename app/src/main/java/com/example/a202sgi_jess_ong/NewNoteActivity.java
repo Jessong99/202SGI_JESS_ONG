@@ -1,5 +1,7 @@
 package com.example.a202sgi_jess_ong;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,12 +46,26 @@ public class NewNoteActivity extends AppCompatActivity {
     Toolbar mToolbar;
     AlertDialog.Builder builder;
     private String noteID=null;
-    int i = 0; // TODO: 30-Nov-19 pass value to saveNote(if i =1; update hash map with noti) 
+    int i = 0; // TODO: 30-Nov-19 pass value to saveNote(if i =1; update hash map with noti)
+
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private int mHour;
+    private int mMinute;
+    private Calendar c;
+    private Context ctx = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
+
+        mYear= Calendar.getInstance().get(Calendar.YEAR);
+        mMonth=Calendar.getInstance().get(Calendar.MONTH)+1;
+        mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
+        mHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) ;
+        mMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
         try {
             //get noteId from Intent
@@ -125,7 +144,8 @@ public class NewNoteActivity extends AppCompatActivity {
                 saveNote();
                 break;
             case R.id.reminder:
-                saveNote();
+                showDatepicker();
+                showTimepicker();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -211,5 +231,38 @@ public class NewNoteActivity extends AppCompatActivity {
                 });
         builder.create();
         builder.show();
+    }
+
+    private void showTimepicker() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int pHour, int pMinute) {
+                        mHour = pHour;
+                        mMinute = pMinute;
+                    }
+                }, mHour, mMinute, true);
+
+        timePickerDialog.show();
+    }
+
+    private void showDatepicker() {
+        c = Calendar.getInstance();
+        int mYearParam = mYear;
+        int mMonthParam = mMonth-1;
+        int mDayParam = mDay;
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(ctx,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        mMonth = monthOfYear + 1;
+                        mYear=year;
+                        mDay=dayOfMonth;
+                    }
+                }, mYearParam, mMonthParam, mDayParam);
+
+        datePickerDialog.show();
     }
 }
