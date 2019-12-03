@@ -245,9 +245,11 @@ public class NewNoteActivity extends AppCompatActivity {
                         Toast.makeText(getBaseContext(), "hi", Toast.LENGTH_SHORT).show();
                     }
 
-                }, mHour, mMinute, true);
+                }, mHour, mMinute, false);
 
         timePickerDialog.show();
+
+        Toast.makeText(getBaseContext(), mMinute, Toast.LENGTH_SHORT).show();
     }
 
     private void showDatePicker() {
@@ -272,5 +274,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 }, mYearParam, mMonthParam, mDayParam);
 
         datePickerDialog.show();
+
+        Toast.makeText(getBaseContext(), mYear, Toast.LENGTH_SHORT).show();
     }
 }
