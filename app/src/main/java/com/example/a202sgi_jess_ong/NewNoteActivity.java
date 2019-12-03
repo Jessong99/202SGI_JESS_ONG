@@ -145,7 +145,6 @@ public class NewNoteActivity extends AppCompatActivity {
                 break;
             case R.id.reminder:
                 showDatepicker();
-                showTimepicker();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -260,7 +259,10 @@ public class NewNoteActivity extends AppCompatActivity {
                         mMonth = monthOfYear + 1;
                         mYear=year;
                         mDay=dayOfMonth;
+
+                        showTimepicker();
                     }
+
                 }, mYearParam, mMonthParam, mDayParam);
 
         datePickerDialog.show();
