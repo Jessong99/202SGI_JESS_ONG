@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.a202sgi_jess_ong.NewNoteActivity;
+import com.example.a202sgi_jess_ong.MainActivity;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -96,7 +96,7 @@ public class SignInFragment extends Fragment {
                                 if (task.isSuccessful()){
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //show user's list of notes
-                                    startActivity(new Intent(getActivity(), NewNoteActivity.class));
+                                    startActivity(new Intent(getActivity(), MainActivity.class));
                                 }else {
                                     //TODO: set why is failed, wrong pw or no user
                                     Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
@@ -108,12 +108,13 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        // TODO: 26-Nov-19 Set animation transaction to show diff 
+        // TODO: check is the animation transaction works
         textViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, new RegisterFragment()).addToBackStack(null).commit();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
