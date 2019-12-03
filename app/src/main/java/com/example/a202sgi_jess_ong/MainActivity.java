@@ -170,17 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    // TODO: 30-Nov-19 maybe delete if not sort option
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.sort:
-                Toast.makeText(this,"Sort Btn Clicked",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     //nav menu activity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
