@@ -64,7 +64,7 @@ public class NewNoteActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mYear= Calendar.getInstance().get(Calendar.YEAR);
-        mMonth=Calendar.getInstance().get(Calendar.MONTH)+1;
+        mMonth=Calendar.getInstance().get(Calendar.MONTH);
         mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
         mHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) ;
         mMinute = Calendar.getInstance().get(Calendar.MINUTE);
@@ -146,7 +146,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 saveNote();
                 break;
             case R.id.reminder:
-                showDatepicker();
+                showDatePicker();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -234,22 +234,26 @@ public class NewNoteActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void showTimepicker() {
+    private void showTimePicker() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int pHour, int pMinute) {
                         mHour = pHour;
                         mMinute = pMinute;
+
+                        // TODO: 03-Dec-19 testing
+                        Toast.makeText(getBaseContext(), "hi", Toast.LENGTH_SHORT).show();
                     }
+
                 }, mHour, mMinute, true);
 
         timePickerDialog.show();
     }
 
-    private void showDatepicker() {
+    private void showDatePicker() {
         c = Calendar.getInstance();
         int mYearParam = mYear;
-        int mMonthParam = mMonth-1;
+        int mMonthParam = mMonth;
         final int mDayParam = mDay;
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(ctx,
@@ -258,12 +262,11 @@ public class NewNoteActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                        mMonth = monthOfYear + 1;
+                        mMonth = monthOfYear;
                         mYear=year;
                         mDay=dayOfMonth;
 
-
-                        showTimepicker();
+                        showTimePicker();
                     }
 
                 }, mYearParam, mMonthParam, mDayParam);
