@@ -54,7 +54,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private int mDay;
     private int mHour;
     private int mMinute;
-    private Calendar c = Calendar.getInstance();
+//  todo  private Calendar c = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +63,9 @@ public class NewNoteActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //todo delete ma
-        /*mYear= Calendar.getInstance().get(Calendar.YEAR);
+        mYear= Calendar.getInstance().get(Calendar.YEAR);
         mMonth=Calendar.getInstance().get(Calendar.MONTH);
-        mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;*/
-
+        mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
         mHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) ;
         mMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
@@ -240,26 +239,54 @@ public class NewNoteActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int pHour, int pMinute) {
                         mHour = pHour;
                         mMinute = pMinute;
-
-                        // TODO: 03-Dec-19 testing
-                        Toast.makeText(getBaseContext(), "hi", Toast.LENGTH_SHORT).show();
+                        i= 1;
                     }
 
                 }, mHour, mMinute, false);
 
+        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    Toast.makeText(NewNoteActivity.this,"byebye",Toast.LENGTH_SHORT).show();
+                    i = 0;
+                }
+            }
+        });
+
         timePickerDialog.show();
 
-        Toast.makeText(getBaseContext(), "time hi"+mHour, Toast.LENGTH_SHORT).show();
     }
 
     private void showDatePicker() {
 
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+                mYear = i;
+                mMonth = i1;
+                mDay = i2;
+                i= 1;
+                showTimePicker();
+            }
+        },mYear,mMonth,mDay);
+
+        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_NEGATIVE) {
+                    Toast.makeText(NewNoteActivity.this,"bye1",Toast.LENGTH_SHORT).show();
+                    i = 0;
+                }
+            }
+        });
+
+        datePickerDialog.show();
+
+        /*final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
                 c.set(Calendar.YEAR, year);
                 c.set(Calendar.MONTH, monthOfYear);
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -271,11 +298,12 @@ public class NewNoteActivity extends AppCompatActivity {
             }
 
 
+
         };
 
         new DatePickerDialog(NewNoteActivity.this, date, c
                 .get(Calendar.YEAR), c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH)).show();
+                c.get(Calendar.DAY_OF_MONTH)).show();*/
 
 
 
