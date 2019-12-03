@@ -2,10 +2,4 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/sort"
-        android:icon="@drawable/ic_sort_white_24dp"
-        android:title="Sort"
-        android:visible="true"
-        app:showAsAction="ifRoom" />
 </menu>
