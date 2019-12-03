@@ -267,7 +267,9 @@ public class NewNoteActivity extends AppCompatActivity {
                 mYear = year;
                 mMonth = monthOfYear;
                 mDay = dayOfMonth;
+                showTimePicker();
             }
+
 
         };
 
@@ -275,7 +277,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 .get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH)).show();
 
-        showTimePicker();
+
 
     }
 }
