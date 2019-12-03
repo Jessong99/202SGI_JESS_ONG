@@ -275,6 +275,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
         datePickerDialog.show();
 
-        Toast.makeText(getBaseContext(), mYear, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(),"hi", Toast.LENGTH_SHORT).show();
     }
 }
