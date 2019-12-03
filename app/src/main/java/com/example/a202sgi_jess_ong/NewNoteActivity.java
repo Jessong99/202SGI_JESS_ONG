@@ -250,7 +250,7 @@ public class NewNoteActivity extends AppCompatActivity {
         c = Calendar.getInstance();
         int mYearParam = mYear;
         int mMonthParam = mMonth-1;
-        int mDayParam = mDay;
+        final int mDayParam = mDay;
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(ctx,
                 new DatePickerDialog.OnDateSetListener() {
@@ -262,7 +262,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         mYear=year;
                         mDay=dayOfMonth;
 
-                        Toast.makeText(NewNoteActivity.this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+
                         showTimepicker();
                     }
 
