@@ -2,6 +2,7 @@ package com.example.a202sgi_jess_ong.profile;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -16,10 +17,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.a202sgi_jess_ong.NewNoteActivity;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -93,10 +94,9 @@ public class SignInFragment extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 mProgressDialog.dismiss();
                                 if (task.isSuccessful()){
-                                    //TODO: start profile activity or show note list
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
-                                    FragmentManager fm = getFragmentManager();
-                                    fm.popBackStack();
+                                    //show user's list of notes
+                                    startActivity(new Intent(getActivity(), NewNoteActivity.class));
                                 }else {
                                     //TODO: set why is failed, wrong pw or no user
                                     Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
