@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class NewNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mYear= Calendar.getInstance().get(Calendar.YEAR);
         mMonth=Calendar.getInstance().get(Calendar.MONTH)+1;
@@ -260,6 +262,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         mYear=year;
                         mDay=dayOfMonth;
 
+                        Toast.makeText(NewNoteActivity.this, "Press back again to exit", Toast.LENGTH_SHORT).show();
                         showTimepicker();
                     }
 
