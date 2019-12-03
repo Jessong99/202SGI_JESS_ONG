@@ -54,8 +54,7 @@ public class NewNoteActivity extends AppCompatActivity {
     private int mDay;
     private int mHour;
     private int mMinute;
-    private Calendar c;
-    private Context ctx = this;
+    private Calendar c = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +92,7 @@ public class NewNoteActivity extends AppCompatActivity {
             showCurrentData();
         }
         inputNote.setSelection(inputNote.getText().length());
+
     }
 
     private void showCurrentData() {
@@ -140,8 +140,6 @@ public class NewNoteActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.save_note:
-                saveNote();
-                break;
             case R.id.update_note:
                 saveNote();
                 break;
@@ -235,7 +233,7 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void showTimePicker() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int pHour, int pMinute) {
                         mHour = pHour;
@@ -249,32 +247,29 @@ public class NewNoteActivity extends AppCompatActivity {
 
         timePickerDialog.show();
 
-        Toast.makeText(getBaseContext(), mMinute, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "time hi", Toast.LENGTH_SHORT).show();
     }
 
     private void showDatePicker() {
-        c = Calendar.getInstance();
-        int mYearParam = mYear;
-        int mMonthParam = mMonth;
-        final int mDayParam = mDay;
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(ctx,
-                new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        mMonth = monthOfYear;
-                        mYear=year;
-                        mDay=dayOfMonth;
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.MONTH, monthOfYear);
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        showTimePicker();
-                    }
+            }
 
-                }, mYearParam, mMonthParam, mDayParam);
+        };
 
-        datePickerDialog.show();
+        new DatePickerDialog(NewNoteActivity.this, date, c
+                .get(Calendar.YEAR), c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)).show();
 
-        Toast.makeText(getBaseContext(),"hi", Toast.LENGTH_SHORT).show();
+
     }
 }
