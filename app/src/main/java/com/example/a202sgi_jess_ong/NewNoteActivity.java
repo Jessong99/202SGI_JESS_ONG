@@ -66,6 +66,7 @@ public class NewNoteActivity extends AppCompatActivity {
         /*mYear= Calendar.getInstance().get(Calendar.YEAR);
         mMonth=Calendar.getInstance().get(Calendar.MONTH);
         mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;*/
+
         mHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) ;
         mMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
@@ -248,7 +249,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         timePickerDialog.show();
 
-        Toast.makeText(getBaseContext(), "time hi", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "time hi"+mHour, Toast.LENGTH_SHORT).show();
     }
 
     private void showDatePicker() {
@@ -263,8 +264,9 @@ public class NewNoteActivity extends AppCompatActivity {
                 c.set(Calendar.MONTH, monthOfYear);
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                m
-
+                mYear = year;
+                mMonth = monthOfYear;
+                mDay = dayOfMonth;
             }
 
         };
@@ -273,8 +275,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 .get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH)).show();
 
-        Toast.makeText(getBaseContext(), year, Toast.LENGTH_SHORT).show();
-
+        showTimePicker();
 
     }
 }
