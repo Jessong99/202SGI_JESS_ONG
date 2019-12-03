@@ -62,9 +62,10 @@ public class NewNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_note);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        mYear= Calendar.getInstance().get(Calendar.YEAR);
+        //todo delete ma
+        /*mYear= Calendar.getInstance().get(Calendar.YEAR);
         mMonth=Calendar.getInstance().get(Calendar.MONTH);
-        mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
+        mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;*/
         mHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) ;
         mMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
@@ -262,6 +263,8 @@ public class NewNoteActivity extends AppCompatActivity {
                 c.set(Calendar.MONTH, monthOfYear);
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+                m
+
             }
 
         };
@@ -269,6 +272,8 @@ public class NewNoteActivity extends AppCompatActivity {
         new DatePickerDialog(NewNoteActivity.this, date, c
                 .get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH)).show();
+
+        Toast.makeText(getBaseContext(), year, Toast.LENGTH_SHORT).show();
 
 
     }
