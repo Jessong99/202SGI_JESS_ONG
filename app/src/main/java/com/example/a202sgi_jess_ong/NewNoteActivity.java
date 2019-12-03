@@ -233,28 +233,32 @@ public class NewNoteActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+    private void saveReminder() {
+
+    }
+
     private void showTimePicker() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int pHour, int pMinute) {
-                        mHour = pHour;
-                        mMinute = pMinute;
-                        i= 1;
-                    }
+            @Override
+            public void onTimeSet(TimePicker view, int pHour, int pMinute) {
+                mHour = pHour;
+                mMinute = pMinute;
+                i= 1;
+                saveReminder();
+            }
 
-                }, mHour, mMinute, false);
+        }, mHour, mMinute, false);
 
         timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    Toast.makeText(NewNoteActivity.this,"byebye",Toast.LENGTH_SHORT).show();
                     i = 0;
                 }
             }
         });
 
         timePickerDialog.show();
-
     }
 
     private void showDatePicker() {
@@ -274,38 +278,11 @@ public class NewNoteActivity extends AppCompatActivity {
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    Toast.makeText(NewNoteActivity.this,"bye1",Toast.LENGTH_SHORT).show();
                     i = 0;
                 }
             }
         });
 
         datePickerDialog.show();
-
-        /*final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                c.set(Calendar.YEAR, year);
-                c.set(Calendar.MONTH, monthOfYear);
-                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                mYear = year;
-                mMonth = monthOfYear;
-                mDay = dayOfMonth;
-                showTimePicker();
-            }
-
-
-
-        };
-
-        new DatePickerDialog(NewNoteActivity.this, date, c
-                .get(Calendar.YEAR), c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH)).show();*/
-
-
-
     }
 }
