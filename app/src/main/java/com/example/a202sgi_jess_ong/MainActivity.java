@@ -173,11 +173,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
         MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                imm.showSoftInput(getCurrentFocus(), 0);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                imm.hideSoftInputFromWindow((IBinder) getParent(), 0);
+                return true;
+            }
+        });
         SearchView searchView = (SearchView)searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                imm.hideSoftInputFromWindow((IBinder) getParent(), 0);
                 return false;
             }
 
@@ -187,15 +201,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return false;
             }
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                Toast.makeText(getBaseContext(),"hi",Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        //hide Soft Input From Window
-        imm.hideSoftInputFromWindow((IBinder) getParent(), 0);
         return true;
     }
 
