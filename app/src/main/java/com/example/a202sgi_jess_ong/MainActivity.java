@@ -177,12 +177,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
                 imm.showSoftInput(getCurrentFocus(), 0);
+
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                imm.hideSoftInputFromWindow((IBinder) getParent(), 0);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 return true;
             }
         });
