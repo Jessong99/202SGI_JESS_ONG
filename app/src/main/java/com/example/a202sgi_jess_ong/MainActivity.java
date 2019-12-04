@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final SearchView searchView = (SearchView)searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.requestFocus();
+        //todo get focus
 
         searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
