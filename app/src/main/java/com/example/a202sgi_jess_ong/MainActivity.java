@@ -173,11 +173,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
         MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        final SearchView searchView = (SearchView)searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
                 imm.showSoftInput(getCurrentFocus(), 0);
-
+                searchView.setFocusable(true);
                 return true;
             }
 
@@ -187,8 +189,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
         });
-        SearchView searchView = (SearchView)searchItem.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
