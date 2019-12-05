@@ -47,12 +47,6 @@
             android:layout_height="wrap_content"
             android:text="@string/register"></Button>
 
-        <TextView
-            android:textAlignment="center"
-            android:text="@string/registered"
-            android:id="@+id/textView_signIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></TextView>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </RelativeLayout>

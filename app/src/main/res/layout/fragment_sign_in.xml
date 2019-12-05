@@ -9,8 +9,7 @@
     tools:context=".profile.SignInFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="150dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,14 +22,6 @@
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold"  />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save your note online ;)"
-            android:textAlignment="center"
-            android:textSize="16sp"/>
 
         <EditText
             android:layout_margin="15dp"
@@ -54,13 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_in"></Button>
-
-        <TextView
-            android:textAlignment="center"
-            android:text="@string/not_yet_register"
-            android:id="@+id/textView_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></TextView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

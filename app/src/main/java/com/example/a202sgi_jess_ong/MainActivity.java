@@ -47,16 +47,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle mDrawerToggle;
     Toolbar mToolbar;
     NavigationView mNavigationView;
+    private long backPressedTime;
+    private Toast backToast;
 
     private FirebaseAuth mFirebaseAuth;
-
+    private DatabaseReference mDatabaseReference;
     private RecyclerView mRecyclerView;
     private ArrayList<Note> mList;
     private NoteAdapter mNotesAdapter;
-    private DatabaseReference mDatabaseReference;
 
-    private long backPressedTime;
-    private Toast backToast;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

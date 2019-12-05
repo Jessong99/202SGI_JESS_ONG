@@ -23,7 +23,7 @@ public class ProfileFragment extends Fragment{
     //TODO: Add back btn
     //TODO: Display profile
 
-    private TextView mTextView;
+    private TextView mTextViewEmail;
     private Button btnLogOut;
     FirebaseAuth mFirebaseAuth;
 
@@ -31,8 +31,7 @@ public class ProfileFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
-        mTextView = (TextView) view.findViewById(R.id.textViewUserEmail);
+        mTextViewEmail = (TextView) view.findViewById(R.id.textViewUserEmail);
         btnLogOut = (Button) view.findViewById(R.id.btn_logOut);
 
         //check if user currently log in
@@ -40,7 +39,8 @@ public class ProfileFragment extends Fragment{
         if (mFirebaseAuth.getCurrentUser() != null) {
             //get current user email and display on profile
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
-            mTextView.setText("Welcome " + user.getEmail());
+            mTextViewEmail.setText(
+                    "Email : "+ user.getEmail());
 
             btnLogOut.setOnClickListener(new View.OnClickListener() {
                 @Override

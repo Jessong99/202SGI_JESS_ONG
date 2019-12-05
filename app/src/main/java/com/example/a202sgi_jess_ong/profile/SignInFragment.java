@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.a202sgi_jess_ong.MainActivity;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -58,14 +59,12 @@ public class SignInFragment extends Fragment {
                 if(TextUtils.isEmpty(email)){
                     //email is empty
                     Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();
-                    //stopping the function execution further
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
                     //password is empty
                     Snackbar.make(view, "Please enter the password.", Snackbar.LENGTH_SHORT).show();
-                    //stopping the function execution further
                     return;
                 }
 
@@ -94,12 +93,17 @@ public class SignInFragment extends Fragment {
                                     startActivity(new Intent(getActivity(), MainActivity.class));
                                 }else {
                                     //TODO: set why is failed, wrong pw or no user
-                                    Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
 
                                 }
                             }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(),e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                            }
                         });
-
             }
         });
 

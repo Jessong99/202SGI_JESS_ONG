@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,20 +29,19 @@ public class RegisterFragment extends Fragment {
 
     private EditText eTextEmailR;
     private EditText eTextPasswordR;
-    private TextView textViewSignIn;
+    private InputMethodManager imm;
+    private Button button;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
 
-    private InputMethodManager imm;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
-        Button button = (Button) view.findViewById(R.id.btn_register);
+        button = (Button) view.findViewById(R.id.btn_register);
         eTextEmailR = (EditText) view.findViewById(R.id.editText_emailR);
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
-        textViewSignIn = (TextView) view.findViewById(R.id.textView_signIn);
-        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,16 +100,6 @@ public class RegisterFragment extends Fragment {
 
              }
         });
-
-        // TODO: 26-Nov-19 Set animation transaction to show diff
-        textViewSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
-            }
-        });
-
         return view;
     }
 }

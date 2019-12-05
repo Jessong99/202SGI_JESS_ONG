@@ -4,11 +4,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile.SignInFragment">
+    tools:context=".profile.ViewPagerFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
+        android:theme="@style/AppTheme"
         android:layout_height="wrap_content">
 
         <com.google.android.material.tabs.TabItem
