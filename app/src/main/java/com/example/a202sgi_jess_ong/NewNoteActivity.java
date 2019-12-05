@@ -136,20 +136,21 @@ public class NewNoteActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
         builder.setMessage("Do you want to save your changes ?")
                 .setTitle("You have unsaved changes for this note.")
+                .setIcon(R.drawable.ic_error_white_24dp)
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         saveNote();
                         finish();
                     }
                 })
-                .setNegativeButton("Don't Save", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                })
-                .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User select cancel and close the dialog box
+                    }
+                })
+                .setNeutralButton("Don't Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
                     }
                 });
         builder.create();
@@ -213,6 +214,7 @@ public class NewNoteActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.alert_delete_title);
         builder.setMessage(R.string.alert_delete_text)
+                .setIcon(R.drawable.ic_delete_white_24dp)
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mDatabaseReference.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
