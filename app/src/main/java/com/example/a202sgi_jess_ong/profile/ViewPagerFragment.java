@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class ViewPagerAdapter extends Fragment{
+public class ViewPagerFragment extends Fragment{
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -58,6 +58,17 @@ public class ViewPagerAdapter extends Fragment{
         @Override
         public int getCount() {
             return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Sign In";
+                case 1:
+                    return "Register";
+            }
+            return null;
         }
     }
 }

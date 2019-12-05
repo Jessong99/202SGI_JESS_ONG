@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a202sgi_jess_ong.profile.ProfileFragment;
-import com.example.a202sgi_jess_ong.profile.SignInFragment;
+import com.example.a202sgi_jess_ong.profile.ViewPagerFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue", Snackbar.LENGTH_SHORT).show();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ViewPagerFragment()).addToBackStack(null).commit();
         }
 
         //set up toolbar
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else {
                     //lead user to sign in if currently not signed in
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SignInFragment()).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ViewPagerFragment()).addToBackStack(null).commit();
                 }
                 break;
             case R.id.profile:
