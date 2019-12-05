@@ -46,7 +46,6 @@ public class NewNoteActivity extends AppCompatActivity {
     Toolbar mToolbar;
     AlertDialog.Builder builder;
     private String noteID=null;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +68,6 @@ public class NewNoteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         inputNote = (EditText)findViewById(R.id.input_note);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -82,6 +78,28 @@ public class NewNoteActivity extends AppCompatActivity {
         }
         inputNote.setSelection(inputNote.getText().length());
 
+        if (noteID!=null){
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+            navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.copy:
+                            copyNote();
+                            break;
+                        case R.id.shareNote:
+                            shareNote();
+                            break;
+                        case R.id.delete_note:
+                            if (noteID!= null){
+                                deleteNote();
+                            }
+                            break;
+                    }
+                    return false;
+                }
+            });
+        }
     }
 
     private void showCurrentData() {
@@ -104,7 +122,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bottom_menu,menu);
         if (noteID!= null){
             getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         }else {
@@ -125,20 +142,9 @@ public class NewNoteActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
-            case R.id.delete_note:
-                if (noteID!= null){
-                    deleteNote();
-                }
-                break;
             case R.id.save_note:
             case R.id.update_note:
                 saveNote();
-                break;
-            case R.id.copy:
-                copyNote();
-                break;
-            case R.id.shareNote:
-                shareNote();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -196,7 +202,9 @@ public class NewNoteActivity extends AppCompatActivity {
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
                     //notify user the note is updated
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getWindow().getDecorView().
+                            findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     //create new note
                     final DatabaseReference newNoteRef = mDatabaseReference.push();
