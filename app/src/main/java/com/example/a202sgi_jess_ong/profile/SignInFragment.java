@@ -17,7 +17,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.a202sgi_jess_ong.MainActivity;
@@ -43,9 +46,11 @@ public class SignInFragment extends Fragment {
     private LottieAnimationView animationView;
     private InputMethodManager imm;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        final View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
+
         Button button = (Button) view.findViewById(R.id.btn_signIn);
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
@@ -120,4 +125,5 @@ public class SignInFragment extends Fragment {
 
         return view;
     }
+
 }
