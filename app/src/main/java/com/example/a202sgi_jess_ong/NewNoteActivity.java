@@ -1,7 +1,5 @@
 package com.example.a202sgi_jess_ong;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -113,6 +111,7 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 if (noteID!= null){
                     unsavedNote();
+                    finish();
                 }
                 else{
                     finish();
@@ -143,12 +142,11 @@ public class NewNoteActivity extends AppCompatActivity {
                         saveNote();
                     }
                 })
-                .setPositiveButton("Don't Save", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Don't Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
                     }
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User select cancel and close the dialog box
                     }
