@@ -136,7 +136,7 @@ public class NewNoteActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
         builder.setMessage("Do you want to save your changes ?")
                 .setTitle("You have unsaved changes for this note.")
-                .setIcon(R.drawable.ic_error_white_24dp)
+                .setIcon(R.drawable.ic_error_black_24dp)
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         saveNote();
