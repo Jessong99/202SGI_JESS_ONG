@@ -202,8 +202,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     }
                     //notify user the note is updated
-                    Snackbar.make(getWindow().getDecorView().
-                            findViewById(android.R.id.content), "Updated", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(NewNoteActivity.this, "Note Updated", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     //create new note
