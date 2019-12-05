@@ -1,5 +1,7 @@
 package com.example.a202sgi_jess_ong;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -110,9 +112,11 @@ public class NewNoteActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (noteID!= null){
-                    saveNote();
+                    unsavedNote();
                 }
-                finish();
+                else{
+                    finish();
+                }
                 break;
             case R.id.delete_note:
                 if (noteID!= null){
@@ -123,8 +127,34 @@ public class NewNoteActivity extends AppCompatActivity {
             case R.id.update_note:
                 saveNote();
                 break;
+            case R.id.copy:
+                copyNote();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void unsavedNote() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
+        builder.setMessage("Do you want to save your changes ?")
+                .setTitle("You have unsaved changes for this note.")
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        saveNote();
+                    }
+                })
+                .setPositiveButton("Don't Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User select cancel and close the dialog box
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 
     private void saveNote(){
@@ -209,4 +239,6 @@ public class NewNoteActivity extends AppCompatActivity {
         builder.show();
     }
 
+    private void copyNote(){
+    }
 }
