@@ -1,5 +1,7 @@
 package com.example.a202sgi_jess_ong;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -214,7 +216,7 @@ public class NewNoteActivity extends AppCompatActivity {
         builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.alert_delete_title);
         builder.setMessage(R.string.alert_delete_text)
-                .setIcon(R.drawable.ic_delete_white_24dp)
+                .setIcon(R.drawable.ic_delete_black_24dp)
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mDatabaseReference.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -241,5 +243,9 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void copyNote(){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("note text",inputNote.getText());
+        clipboard.setPrimaryClip(clip);
+        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "The note is copied.", Snackbar.LENGTH_SHORT).show();
     }
 }
