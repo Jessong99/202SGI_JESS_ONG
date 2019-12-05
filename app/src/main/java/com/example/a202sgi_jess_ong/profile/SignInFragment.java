@@ -12,14 +12,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.a202sgi_jess_ong.MainActivity;
 import com.example.a202sgi_jess_ong.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,13 +31,10 @@ public class SignInFragment extends Fragment {
     private Button btnSignIn;
     private EditText eTextEmail;
     private EditText eTextPassword;
-    private TextView textViewRegister;
-    private TextView textView2;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
 
-    private LottieAnimationView animationView;
     private InputMethodManager imm;
 
 
@@ -48,13 +42,12 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
 
-        Button button = (Button) view.findViewById(R.id.btn_signIn);
+        btnSignIn = (Button) view.findViewById(R.id.btn_signIn);
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
-        textViewRegister = (TextView) view.findViewById(R.id.textView_register);
-        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
 
@@ -107,16 +100,6 @@ public class SignInFragment extends Fragment {
                             }
                         });
 
-            }
-        });
-
-        // TODO: check is the animation transaction works
-        textViewRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new RegisterFragment()).addToBackStack(null).commit();
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
