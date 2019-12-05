@@ -92,8 +92,7 @@ public class SignInFragment extends Fragment {
                                     //show user's list of notes
                                     startActivity(new Intent(getActivity(), MainActivity.class));
                                 }else {
-                                    //TODO: set why is failed, wrong pw or no user
-                                    //Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
 
                                 }
                             }

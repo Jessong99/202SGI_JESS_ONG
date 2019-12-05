@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<Note> mList;
     private NoteAdapter mNotesAdapter;
 
-
+    int loggedIn = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
+            loggedIn = 0;
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "Please sign in to continue", Snackbar.LENGTH_SHORT).show();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ViewPagerFragment()).addToBackStack(null).commit();
         }
@@ -169,41 +170,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu,menu);
-
         final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-
         MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        final SearchView searchView = (SearchView)searchItem.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setIconifiedByDefault(false);
-        searchView.requestFocus();
 
-        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                imm.showSoftInput(getCurrentFocus(), 0);
-                return true;
-            }
+        if (loggedIn == 1) {
+            final SearchView searchView = (SearchView) searchItem.getActionView();
+            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            searchView.setIconifiedByDefault(false);
+            searchView.requestFocus();
 
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                return true;
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                imm.hideSoftInputFromWindow((IBinder) getParent(), 0);
-                return false;
-            }
+            searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    imm.showSoftInput(getCurrentFocus(), 0);
+                    return true;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mNotesAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    return true;
+                }
+            });
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    imm.hideSoftInputFromWindow((IBinder) getParent(), 0);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mNotesAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        }else {
+            searchItem.setVisible(false);
+        }
         return true;
     }
 
@@ -213,18 +217,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()){
             case R.id.home:
                 // this will back to main page with list of note
-                if (mFirebaseAuth.getCurrentUser() != null) {
-                    finish();
-                    startActivity(getIntent());
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
-                    //lead user to sign in if currently not signed in
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ViewPagerFragment()).addToBackStack(null).commit();
-                }
+                finish();
+                startActivity(getIntent());
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.profile:
-                // TODO: 30-Nov-19 try cancel back stack
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack(null).commit();
+                if (mFirebaseAuth.getCurrentUser() == null){
+                    finish();
+                    startActivity(getIntent());
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+                else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack(null).commit();
+                }
                 break;
             case R.id.about_us:
                 Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();

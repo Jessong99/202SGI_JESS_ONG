@@ -20,9 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment{
 
-    //TODO: Add back btn
-    //TODO: Display profile
-
     private TextView mTextViewEmail;
     private Button btnLogOut;
     FirebaseAuth mFirebaseAuth;
@@ -40,7 +37,7 @@ public class ProfileFragment extends Fragment{
             //get current user email and display on profile
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
             mTextViewEmail.setText(
-                    "Email : "+ user.getEmail());
+                    ""+ user.getEmail());
 
             btnLogOut.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,9 +47,6 @@ public class ProfileFragment extends Fragment{
                     fragmentTransaction.replace(R.id.fragment_container, new ViewPagerFragment()).addToBackStack(null).commit();
                 }
             });
-        } else {
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, new ViewPagerFragment()).addToBackStack(null).commit();
         }
         return view;
     }

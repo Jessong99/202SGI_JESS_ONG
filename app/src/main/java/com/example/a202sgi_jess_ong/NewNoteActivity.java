@@ -43,26 +43,11 @@ public class NewNoteActivity extends AppCompatActivity {
     AlertDialog.Builder builder;
     private String noteID=null;
 
-    /*int i = 0; // TODO: 30-Nov-19 pass value to saveNote(if i =1; update hash map with noti)
-    private DatabaseReference mReminderReference;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-    private int mHour;
-    private int mMinute;*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        //todo delete ma
-        /*mYear= Calendar.getInstance().get(Calendar.YEAR);
-        mMonth=Calendar.getInstance().get(Calendar.MONTH);
-        mDay=Calendar.getInstance().get(Calendar.DAY_OF_MONTH) ;
-        mHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) ;
-        mMinute = Calendar.getInstance().get(Calendar.MINUTE);*/
 
         try {
             //get noteId from Intent
@@ -83,8 +68,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
-        // TODO: 04-Dec-19 delete ma
-        //mReminderReference = FirebaseDatabase.getInstance().getReference().child("Reminders").child(mFirebaseAuth.getCurrentUser().getUid());
 
         if (noteID!= null){
             showCurrentData();
@@ -113,7 +96,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.reminder_menu,menu);
         if (noteID!= null){
             getMenuInflater().inflate(R.menu.edit_note_menu,menu);
         }else {
@@ -141,10 +123,6 @@ public class NewNoteActivity extends AppCompatActivity {
             case R.id.update_note:
                 saveNote();
                 break;
-            // TODO: 04-Dec-19 delete ma
-            /*case R.id.reminder:
-                showDatePicker();
-                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -231,62 +209,4 @@ public class NewNoteActivity extends AppCompatActivity {
         builder.show();
     }
 
-    // TODO: 04-Dec-19 delete ma
-    /*private void saveReminder() {
-
-    }
-
-    private void showDatePicker() {
-
-        if (noteID!= null) {
-            mYear = 1;
-            mMonth = 2;
-            mDay = 1;
-        }
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-
-                mYear = i;
-                mMonth = i1;
-                mDay = i2;
-                i= 1;
-                showTimePicker();
-            }
-        },mYear,mMonth,mDay);
-
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    i = 0;
-                }
-            }
-        });
-
-        datePickerDialog.show();
-    }
-
-    private void showTimePicker() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int pHour, int pMinute) {
-                mHour = pHour;
-                mMinute = pMinute;
-                i= 1;
-                saveReminder();
-            }
-
-        }, mHour, mMinute, false);
-
-        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_NEGATIVE) {
-                    i = 0;
-                }
-            }
-        });
-
-        timePickerDialog.show();
-    }*/
 }

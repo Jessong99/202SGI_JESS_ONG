@@ -51,7 +51,6 @@ public class RegisterFragment extends Fragment {
                 String emailR = eTextEmailR.getText().toString().trim();
                 String passwordR = eTextPasswordR.getText().toString().trim();
 
-                //TODO: Compile this error check with the sign in part
                 if(TextUtils.isEmpty(emailR)){
                     //email is empty
                     Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();

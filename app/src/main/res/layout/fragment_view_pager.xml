@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -9,15 +10,24 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#C8D3F3"
+        app:tabGravity="fill"
+        app:tabIndicatorAnimationDuration="300"
+        app:tabIndicatorColor="#18237A"
+        app:tabIndicatorGravity="bottom"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabTextColor="#18237A">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/signInTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign In" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/registerTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register  " />
@@ -27,7 +37,5 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_height="wrap_content"/>
 </LinearLayout>
