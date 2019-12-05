@@ -111,7 +111,6 @@ public class NewNoteActivity extends AppCompatActivity {
             case android.R.id.home:
                 if (noteID!= null){
                     unsavedNote();
-                    finish();
                 }
                 else{
                     finish();
@@ -140,10 +139,12 @@ public class NewNoteActivity extends AppCompatActivity {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         saveNote();
+                        finish();
                     }
                 })
                 .setNegativeButton("Don't Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        finish();
                     }
                 })
                 .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
