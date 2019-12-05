@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -130,15 +131,27 @@ public class NewNoteActivity extends AppCompatActivity {
             case R.id.copy:
                 copyNote();
                 break;
+            case R.id.shareNote:
+                shareNote();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareNote() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Here is the share content body";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
     private void unsavedNote() {
         AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
         builder.setMessage("Do you want to save your changes ?")
                 .setTitle("You have unsaved changes for this note.")
-                .setIcon(R.drawable.ic_error_black_24dp)
+                .setIcon(R.drawable.ic_warning_black_24dp)
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         saveNote();
