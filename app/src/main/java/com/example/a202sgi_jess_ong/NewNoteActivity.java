@@ -79,6 +79,7 @@ public class NewNoteActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
+        mDatabaseReference.keepSynced(true);
 
         if (noteID!= null){
             showCurrentData();
