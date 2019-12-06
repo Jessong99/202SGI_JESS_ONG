@@ -11,7 +11,7 @@
     tools:context=".AboutUsFragment">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/about_us"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_marginTop="100dp"
@@ -20,22 +20,20 @@
         android:src="@drawable/about_us_font" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/icon_aboutUs"
         android:layout_width="121dp"
         android:layout_gravity="center"
         android:layout_height="94dp"
         android:src="@drawable/icon_clear" />
 
-    <Button
-        android:id="@+id/shareApp"
-        android:layout_width="180dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:background="#79FFFFFF"
-        android:text="Share The App" />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a note taking app, able to share and save online , to " />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/copyright"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
