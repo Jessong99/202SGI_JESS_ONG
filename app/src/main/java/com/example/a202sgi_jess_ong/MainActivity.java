@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Firebase
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
             loggedIn = 0;
