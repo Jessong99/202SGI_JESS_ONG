@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
         android:src="@drawable/about_us_font" />
 
@@ -24,7 +24,7 @@
         android:layout_width="121dp"
         android:layout_gravity="center"
         android:layout_height="94dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/icon_clear" />
 
     <TextView
@@ -33,8 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="This is a note taking app, able to share and save online , to "
-        android:textSize="22sp" />
+        android:padding="30dp"
+        android:text="J.Note, a simple text-based note-taking app is designed which suitable for Android device users.\n\nThis app store all the notes in the cloud so user can access them anytime from anywhere."
+        android:textColor="#CB000000"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/copyright"
