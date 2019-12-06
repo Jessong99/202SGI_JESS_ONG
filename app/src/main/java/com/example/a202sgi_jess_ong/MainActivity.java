@@ -222,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.profile:
+                loggedIn = 0;
                 if (mFirebaseAuth.getCurrentUser() == null){
                     finish();
                     startActivity(getIntent());
@@ -232,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.about_us:
+                loggedIn = 0;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).addToBackStack(null).commit();
                 break;
         }
