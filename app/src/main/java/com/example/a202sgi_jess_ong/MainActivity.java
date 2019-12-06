@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView mRecyclerView;
     private ArrayList<Note> mList;
     private NoteAdapter mNotesAdapter;
+    private MenuItem searchItem;
 
     int loggedIn = 1;
 
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu,menu);
         final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        searchItem = menu.findItem(R.id.app_bar_search);
 
         if (loggedIn == 1) {
             final SearchView searchView = (SearchView) searchItem.getActionView();
@@ -222,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.profile:
-                loggedIn = 0;
+                searchItem.setVisible(false);
                 if (mFirebaseAuth.getCurrentUser() == null){
                     finish();
                     startActivity(getIntent());
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.about_us:
-                loggedIn = 0;
+                searchItem.setVisible(false);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).addToBackStack(null).commit();
                 break;
         }

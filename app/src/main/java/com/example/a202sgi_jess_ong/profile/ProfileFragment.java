@@ -2,7 +2,6 @@ package com.example.a202sgi_jess_ong.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,9 +30,6 @@ public class ProfileFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mTextViewEmail = (TextView) view.findViewById(R.id.textViewUserEmail);
         btnLogOut = (Button) view.findViewById(R.id.btn_logOut);
-        
-        MenuItem searchItem = view.findViewById(R.id.app_bar_search);
-        searchItem.setVisible(false);
 
         //check if user currently log in
         mFirebaseAuth = FirebaseAuth.getInstance();

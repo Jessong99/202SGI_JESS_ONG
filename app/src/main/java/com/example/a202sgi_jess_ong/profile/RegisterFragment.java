@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -44,8 +43,6 @@ public class RegisterFragment extends Fragment {
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        MenuItem searchItem = view.findViewById(R.id.app_bar_search);
-        searchItem.setVisible(false);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
