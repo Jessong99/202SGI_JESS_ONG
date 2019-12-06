@@ -130,12 +130,6 @@ public class NewNoteActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
                 builder.setView(view)
                         .setTitle("QR Code")
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
