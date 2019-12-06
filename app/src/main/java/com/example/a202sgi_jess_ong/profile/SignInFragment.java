@@ -91,9 +91,6 @@ public class SignInFragment extends Fragment {
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //show user's list of notes
                                     startActivity(new Intent(getActivity(), MainActivity.class));
-                                }else {
-                                    Toast.makeText(getActivity(),"Sign In Failed. Please Try Again.",Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         })
