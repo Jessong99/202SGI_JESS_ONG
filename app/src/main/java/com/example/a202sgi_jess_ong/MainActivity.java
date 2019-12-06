@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Firebase
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() == null) {
             loggedIn = 0;
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .child("Notes")
                 .child(mFirebaseAuth.getCurrentUser().getUid());
         final LayoutAnimationController finalController = controller;
+        mDatabaseReference.keepSynced(true);
 
         //sort order by timestamp
         mDatabaseReference.orderByChild("noteDate").addValueEventListener(new ValueEventListener() {
