@@ -9,6 +9,11 @@
         android:enabled="true"
         app:showAsAction="always" />
     <item
+        android:id="@+id/qrCode"
+        android:icon="@drawable/qr_icon"
+        android:title="QR Code"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/shareNote"
         android:enabled="true"
         android:icon="@drawable/ic_share_white_24dp"

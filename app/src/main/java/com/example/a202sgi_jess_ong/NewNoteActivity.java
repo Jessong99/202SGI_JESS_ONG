@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,9 +35,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.WriterException;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 public class NewNoteActivity extends AppCompatActivity {
 
@@ -95,10 +102,37 @@ public class NewNoteActivity extends AppCompatActivity {
                                 deleteNote();
                             }
                             break;
+                        case R.id.qrCode:
+                            generateQRCode();
+                            break;
                     }
                     return false;
                 }
             });
+        }
+    }
+
+    private void generateQRCode() {
+        String text = inputNote.getText().toString().trim();
+        Bitmap bitmap = null;
+        if (!TextUtils.isEmpty(text)) {
+            QRGEncoder qrgEncoder = new QRGEncoder(text, null, QRGContents.Type.TEXT, 10);
+            try {
+                // Getting QR-Code as Bitmap
+                bitmap = qrgEncoder.encodeAsBitmap();
+                Drawable d = new BitmapDrawable(getResources(),bitmap);
+                AlertDialog aDialog = new AlertDialog.Builder(NewNoteActivity.this)
+                        .setIcon(d)
+                        .setPositiveButton(android.R.string.ok,null)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .create();
+                aDialog.show();
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
         }
     }
 
