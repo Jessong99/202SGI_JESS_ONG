@@ -86,31 +86,31 @@ public class NewNoteActivity extends AppCompatActivity {
         }
         inputNote.setSelection(inputNote.getText().length());
 
-        if (noteID!=null){
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-            navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    switch (menuItem.getItemId()) {
-                        case R.id.copy:
-                            copyNote();
-                            break;
-                        case R.id.shareNote:
-                            shareNote();
-                            break;
-                        case R.id.delete_note:
-                            if (noteID!= null){
-                                deleteNote();
-                            }
-                            break;
-                        case R.id.qrCode:
-                            generateQRCode();
-                            break;
-                    }
-                    return false;
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.copy:
+                        copyNote();
+                        break;
+                    case R.id.shareNote:
+                        shareNote();
+                        break;
+                    case R.id.delete_note:
+                        if (noteID != null) {
+                            deleteNote();
+                        }else {
+                            finish();
+                        }
+                        break;
+                    case R.id.qrCode:
+                        generateQRCode();
+                        break;
                 }
-            });
-        }
+                return false;
+            }
+        });
     }
 
     private void generateQRCode() {
@@ -237,6 +237,12 @@ public class NewNoteActivity extends AppCompatActivity {
         if (mFirebaseAuth.getCurrentUser() != null) {
             //get edit text
             String text = inputNote.getText().toString().trim();
+            //hide Soft Input From Window
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
             if (!TextUtils.isEmpty(text)) {
                 if (noteID != null) {
                     //update current note
@@ -244,12 +250,7 @@ public class NewNoteActivity extends AppCompatActivity {
                     updateNoteMap.put("noteText", text);
                     updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
                     mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
-                    //hide Soft Input From Window
-                    View view = this.getCurrentFocus();
-                    if (view != null) {
-                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    }
+
                     //notify user the note is updated
                     Toast.makeText(NewNoteActivity.this, "Note Updated", Toast.LENGTH_SHORT).show();
                     finish();
