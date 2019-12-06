@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -117,12 +115,12 @@ public class NewNoteActivity extends AppCompatActivity {
     private void generateQRCode() {
         String text = inputNote.getText().toString().trim();
         Bitmap bitmap = null;
+        //check if the note is empty
         if (!TextUtils.isEmpty(text)) {
             QRGEncoder qrgEncoder = new QRGEncoder(text, null, QRGContents.Type.TEXT, 1000);
             try {
                 // Getting QR-Code as Bitmap
                 bitmap = qrgEncoder.encodeAsBitmap();
-
                 // set up new dialog box
                 AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
                 LayoutInflater inflater = NewNoteActivity.this.getLayoutInflater();
@@ -203,12 +201,16 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void shareNote() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
         String shareBody = inputNote.getText().toString().trim();
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My Note");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        if (!TextUtils.isEmpty(shareBody)) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My Note");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        }else {
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     private void unsavedNote() {
@@ -321,9 +323,15 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void copyNote(){
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("note text",inputNote.getText());
-        clipboard.setPrimaryClip(clip);
-        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "The note is copied.", Snackbar.LENGTH_SHORT).show();
+        String text = inputNote.getText().toString().trim();
+        if (!TextUtils.isEmpty(text)) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("note text",inputNote.getText());
+            clipboard.setPrimaryClip(clip);
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "The note is copied.", Snackbar.LENGTH_SHORT).show();
+        }
+        else {
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
+        }
     }
 }
