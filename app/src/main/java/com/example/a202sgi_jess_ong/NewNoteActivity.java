@@ -12,11 +12,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -116,17 +118,33 @@ public class NewNoteActivity extends AppCompatActivity {
         String text = inputNote.getText().toString().trim();
         Bitmap bitmap = null;
         if (!TextUtils.isEmpty(text)) {
-            QRGEncoder qrgEncoder = new QRGEncoder(text, null, QRGContents.Type.TEXT, 10);
+            QRGEncoder qrgEncoder = new QRGEncoder(text, null, QRGContents.Type.TEXT, 1000);
             try {
                 // Getting QR-Code as Bitmap
                 bitmap = qrgEncoder.encodeAsBitmap();
-                Drawable d = new BitmapDrawable(getResources(),bitmap);
-                AlertDialog aDialog = new AlertDialog.Builder(NewNoteActivity.this)
-                        .setIcon(d)
-                        .setPositiveButton(android.R.string.ok,null)
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .create();
-                aDialog.show();
+
+                // set up new dialog box
+                AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
+                LayoutInflater inflater = NewNoteActivity.this.getLayoutInflater();
+                View view = inflater.inflate(R.layout.qr_code_dialog, null);
+                ImageView imageView = (ImageView)view.findViewById(R.id.imageView4);
+                // set image view from qr code bitmap
+                imageView.setImageBitmap(bitmap);
+                builder.setView(view)
+                        .setTitle("QR Code")
+                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                builder.create();
+                builder.show();
             } catch (WriterException e) {
                 e.printStackTrace();
             }
