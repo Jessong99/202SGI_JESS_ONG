@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,9 +30,6 @@ public class ProfileFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mTextViewEmail = (TextView) view.findViewById(R.id.textViewUserEmail);
         btnLogOut = (Button) view.findViewById(R.id.btn_logOut);
-
-        SearchView searchView = (SearchView) view.findViewById(R.id.app_bar_search);
-        searchView.setVisibility(View.INVISIBLE);
 
         //check if user currently log in
         mFirebaseAuth = FirebaseAuth.getInstance();
