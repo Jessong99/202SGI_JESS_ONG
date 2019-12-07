@@ -297,7 +297,7 @@ public class NewNoteActivity extends AppCompatActivity {
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
         }
     }
-    
+
     private void generateQRCode() {
         String text = inputNote.getText().toString().trim();
         Bitmap bitmap = null;
