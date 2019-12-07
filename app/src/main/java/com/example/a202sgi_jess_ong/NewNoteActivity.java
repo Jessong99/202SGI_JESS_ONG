@@ -113,39 +113,6 @@ public class NewNoteActivity extends AppCompatActivity {
         });
     }
 
-    private void generateQRCode() {
-        String text = inputNote.getText().toString().trim();
-        Bitmap bitmap = null;
-        //check if the note is empty
-        if (!TextUtils.isEmpty(text)) {
-            QRGEncoder qrgEncoder = new QRGEncoder(text, null, QRGContents.Type.TEXT, 1000);
-            try {
-                // Getting QR-Code as Bitmap
-                bitmap = qrgEncoder.encodeAsBitmap();
-                // set up new dialog box
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
-                LayoutInflater inflater = NewNoteActivity.this.getLayoutInflater();
-                View view = inflater.inflate(R.layout.qr_code_dialog, null);
-                ImageView imageView = (ImageView)view.findViewById(R.id.imageView4);
-                // set image view from qr code bitmap
-                imageView.setImageBitmap(bitmap);
-                builder.setView(view)
-                        .setTitle("QR Code")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        });
-                builder.create();
-                builder.show();
-            } catch (WriterException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
-        }
-    }
 
     private void showCurrentData() {
         mDatabaseReference.child(noteID).addValueEventListener(new ValueEventListener() {
@@ -325,6 +292,40 @@ public class NewNoteActivity extends AppCompatActivity {
             ClipData clip = ClipData.newPlainText("note text",inputNote.getText());
             clipboard.setPrimaryClip(clip);
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "The note is copied.", Snackbar.LENGTH_SHORT).show();
+        }
+        else {
+            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
+        }
+    }
+    
+    private void generateQRCode() {
+        String text = inputNote.getText().toString().trim();
+        Bitmap bitmap = null;
+        //check if the note is empty
+        if (!TextUtils.isEmpty(text)) {
+            QRGEncoder qrgEncoder = new QRGEncoder(text, null, QRGContents.Type.TEXT, 1000);
+            try {
+                // Getting QR-Code as Bitmap
+                bitmap = qrgEncoder.encodeAsBitmap();
+                // set up new dialog box
+                AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
+                LayoutInflater inflater = NewNoteActivity.this.getLayoutInflater();
+                View view = inflater.inflate(R.layout.qr_code_dialog, null);
+                ImageView imageView = (ImageView)view.findViewById(R.id.imageView4);
+                // set image view from qr code bitmap
+                imageView.setImageBitmap(bitmap);
+                builder.setView(view)
+                        .setTitle("QR Code")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+                builder.create();
+                builder.show();
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
         }
         else {
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
