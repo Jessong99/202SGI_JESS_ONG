@@ -59,6 +59,7 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_note);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        inputNote = (EditText)findViewById(R.id.input_note);
 
         try {
             //get noteId from Intent
@@ -75,21 +76,24 @@ public class NewNoteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        inputNote = (EditText)findViewById(R.id.input_note);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
+        //get current user id
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Notes").child(mFirebaseAuth.getCurrentUser().getUid());
         mDatabaseReference.keepSynced(true);
 
         if (noteID!= null){
+            //show note text if user click to note item from note list
             showCurrentData();
         }
+        //set cursor to the end of the note
         inputNote.setSelection(inputNote.getText().length());
 
+        //set up bottom navigation menu
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                //perform action based on selected menu item
                 switch (menuItem.getItemId()) {
                     case R.id.copy:
                         copyNote();
@@ -101,6 +105,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         if (noteID != null) {
                             deleteNote();
                         }else {
+                            //redirect to homepage if note is not saved before
                             finish();
                         }
                         break;
@@ -115,10 +120,12 @@ public class NewNoteActivity extends AppCompatActivity {
 
 
     private void showCurrentData() {
+        //retrieved data from firebase based on given note id
         mDatabaseReference.child(noteID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("noteText").getValue()!=null) {
+                    //get data
                     inputNote.setText(dataSnapshot.child("noteText").getValue().toString());
                     inputNote.setSelection(inputNote.getText().length());
                 }
@@ -151,11 +158,13 @@ public class NewNoteActivity extends AppCompatActivity {
                     unsavedNote();
                 }
                 else{
+                    //redirect user to note list
                     finish();
                 }
                 break;
             case R.id.save_note:
             case R.id.update_note:
+                //perform action to save note to firebase
                 saveNote();
                 break;
         }
@@ -276,6 +285,7 @@ public class NewNoteActivity extends AppCompatActivity {
                                     Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
                                     finish();//back to note list
                                 }else {
+                                    //show error message if action is failed to proceed
                                     Log.e("NewNoteActivity", task.getException().toString());
                                     Toast.makeText(NewNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                                 }
@@ -329,6 +339,7 @@ public class NewNoteActivity extends AppCompatActivity {
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                //dismiss dialog box
                             }
                         });
                 builder.create();
