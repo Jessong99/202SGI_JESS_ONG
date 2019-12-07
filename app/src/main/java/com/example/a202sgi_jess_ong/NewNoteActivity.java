@@ -286,11 +286,14 @@ public class NewNoteActivity extends AppCompatActivity {
     }
 
     private void copyNote(){
-        String text = inputNote.getText().toString().trim();
+        String text = inputNote.getText().toString().trim();//get current note text
         if (!TextUtils.isEmpty(text)) {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            //copy to clipboard
             ClipData clip = ClipData.newPlainText("note text",inputNote.getText());
+            //set current clip as primary clip
             clipboard.setPrimaryClip(clip);
+            //notify user
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "The note is copied.", Snackbar.LENGTH_SHORT).show();
         }
         else {
