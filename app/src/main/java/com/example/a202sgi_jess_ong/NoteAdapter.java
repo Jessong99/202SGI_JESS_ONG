@@ -53,7 +53,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public int getItemCount() {
         return notes.size();
     }
-    
+
     class NoteViewHolder extends RecyclerView.ViewHolder {
 
         TextView noteText, noteDate;
