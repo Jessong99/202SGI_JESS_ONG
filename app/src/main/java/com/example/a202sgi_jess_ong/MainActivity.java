@@ -230,12 +230,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
                 else {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment())
+                            .addToBackStack(null).commit();
                 }
                 break;
             case R.id.about_us:
                 searchItem.setVisible(false);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AboutUsFragment())
+                        .addToBackStack(null).commit();
                 break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

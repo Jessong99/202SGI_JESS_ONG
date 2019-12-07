@@ -226,7 +226,7 @@ public class NewNoteActivity extends AppCompatActivity {
                     final DatabaseReference newNoteRef = mDatabaseReference.push();
                     final Map noteMap = new HashMap();
                     noteMap.put("noteText", text);
-                    noteMap.put("noteDate", ServerValue.TIMESTAMP);
+                    noteMap.put("noteDate", ServerValue.TIMESTAMP);//update lastest timestamp
                     //save data into Firebase
                     Thread mainThread = new Thread(new Runnable() {
                         @Override
