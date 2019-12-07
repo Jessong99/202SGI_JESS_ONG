@@ -165,17 +165,22 @@ public class NewNoteActivity extends AppCompatActivity {
     private void shareNote() {
         String shareBody = inputNote.getText().toString().trim();
         if (!TextUtils.isEmpty(shareBody)) {
+            //intent to share the current note through other apps
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My Note");
+            //pass note text
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            //set title
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
         }else {
+            //alert user that it is a empty note
             Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
         }
     }
 
     private void unsavedNote() {
+        //alert user to save change
         AlertDialog.Builder builder = new AlertDialog.Builder(NewNoteActivity.this);
         builder.setMessage("Do you want to save your changes ?")
                 .setTitle("You have unsaved changes for this note.")
@@ -183,7 +188,7 @@ public class NewNoteActivity extends AppCompatActivity {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         saveNote();
-                        finish();
+                        finish(); //redirect user to note list
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -215,9 +220,8 @@ public class NewNoteActivity extends AppCompatActivity {
                     //update current note
                     final Map updateNoteMap = new HashMap();
                     updateNoteMap.put("noteText", text);
-                    updateNoteMap.put("noteDate", ServerValue.TIMESTAMP);
+                    updateNoteMap.put("noteDate", ServerValue.TIMESTAMP); //update timestamp as well
                     mDatabaseReference.child(noteID).updateChildren(updateNoteMap);
-
                     //notify user the note is updated
                     Toast.makeText(NewNoteActivity.this, "Note Updated", Toast.LENGTH_SHORT).show();
                     finish();
@@ -235,6 +239,7 @@ public class NewNoteActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+                                        //notify user as note is added
                                         Toast.makeText(NewNoteActivity.this, "Note Added", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(NewNoteActivity.this, "ERROR: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -244,9 +249,11 @@ public class NewNoteActivity extends AppCompatActivity {
                         }
                     });
                     mainThread.start();
+                    //redirect user to note list
                     finish();
                 }
             } else {
+                //notify user if the note is empty
                 Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), "It is a empty note", Snackbar.LENGTH_SHORT).show();
             }
         }else {
