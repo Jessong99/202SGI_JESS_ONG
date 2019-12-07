@@ -300,7 +300,7 @@ public class NewNoteActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
                                     Toast.makeText(NewNoteActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
-                                    finish();//back to 
+                                    finish();//back to note list
                                 }else {
                                     Log.e("NewNoteActivity", task.getException().toString());
                                     Toast.makeText(NewNoteActivity.this,"ERROR: " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
