@@ -53,6 +53,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public int getItemCount() {
         return notes.size();
     }
+    
+    class NoteViewHolder extends RecyclerView.ViewHolder {
+
+        TextView noteText, noteDate;
+        LinearLayout singleNote;
+
+        public NoteViewHolder(@NonNull final View itemView) {
+            super(itemView);
+            noteText = (TextView) itemView.findViewById(R.id.note_text);
+            noteDate = (TextView) itemView.findViewById(R.id.note_date);
+            singleNote = (LinearLayout)itemView.findViewById(R.id.list_item);
+        }
+
+    }
 
     @Override
     public Filter getFilter() {
@@ -89,19 +103,4 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             notifyDataSetChanged();
         }
     };
-
-    class NoteViewHolder extends RecyclerView.ViewHolder {
-
-        TextView noteText, noteDate;
-        LinearLayout singleNote;
-
-        public NoteViewHolder(@NonNull final View itemView) {
-            super(itemView);
-            noteText = (TextView) itemView.findViewById(R.id.note_text);
-            noteDate = (TextView) itemView.findViewById(R.id.note_date);
-            singleNote = (LinearLayout)itemView.findViewById(R.id.list_item);
-        }
-
-    }
-
 }
